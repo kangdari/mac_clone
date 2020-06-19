@@ -1,0 +1,139 @@
+@charset 'utf-8';
+
+:root {
+  /* color */
+  --nav--background: #333333;
+  --logo--color: #f5f5f7;
+  --nav--border--color: #424245;
+  --grey--color: #8e8e8e;
+}
+
+html {
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+body.open_menu {
+  overflow-y: hidden;
+}
+
+/* globa_nav */
+.gn {
+  min-height: 48px;
+  width: 100%;
+  background: var(--nav--background);
+  transition: all 0.4s ease;
+}
+.gn.open_menu {
+  background: black;
+  min-height: 100vh;
+}
+
+.gn_contents {
+  position: relative;
+}
+
+.gn_contents .gn_header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.gn_item {
+  height: 48px;
+}
+
+.gn_header .gn_item a {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  padding: 0 1rem;
+  color: var(--grey--color);
+  transition: color 0.2s ease;
+}
+
+.gn_item a:hover {
+  color: #fffffe;
+}
+
+.gn_header .gn_mark {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.gn_header .gn_mark.open_menu {
+  opacity: 0;
+}
+
+.gn_search_container {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  padding: 0 10px 15px;
+  border-bottom: 0.5px solid var(--nav--border--color);
+}
+.gn_search_container.visible,
+.gn_list.visible {
+  display: flex;
+  opacity: 1;
+}
+
+.gn_search_form {
+  max-width: 584px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  background: #1e1e20;
+  border-radius: 8px;
+}
+.gn_search_form i {
+  color: #6e6e73;
+  padding: 0 7px 0 8px;
+}
+.gn_search_form input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-decoration: none;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.gn_list {
+  position: absolute;
+  padding: 0 40px;
+  top: 110px;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gn_list .gn_item {
+  display: none;
+  width: 100%;
+  max-width: 584px;
+  height: 44px;
+  color: var(--grey--color);
+}
+
+.gn_list .gn_item.gn_menu_item {
+  display: flex;
+  align-items: center;
+}
+
+.gn_menu_item:nth-child(n + 3):nth-child(-n + 7) {
+  border-top: 1px solid var(--nav--border--color);
+}
+
+.gn .gn_list .gn_item a {
+  width: 100%;
+  font-size: 1rem;
+}
