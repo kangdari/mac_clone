@@ -124,6 +124,7 @@ body.open_menu {
 .gn_search_container {
   opacity: 0;
   transition: opacity 0.4s ease;
+  display: flex;
   justify-content: center;
   position: absolute;
   width: 100%;
@@ -134,7 +135,6 @@ body.open_menu {
 
 #gn_menuState:checked ~ .gn .gn_search_container,
 #gn_menuState:checked ~ .gn .gn_list {
-  display: flex;
   opacity: 1;
 }
 #gn_menuState:checked ~ .gn .gn_mark {
@@ -170,6 +170,7 @@ body.open_menu {
   width: 100%;
   opacity: 0;
   transition: opacity 0.4s ease;
+  display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 5;
