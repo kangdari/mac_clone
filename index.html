@@ -9,17 +9,28 @@
       rel="stylesheet"
       href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"
     />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&display=swap"
+      rel="stylesheet"
+    />
     <title>MacBook Pro 16형</title>
   </head>
   <body>
     <div id="container">
       <header class="header">
+        <input type="checkbox" id="gn_menuState" />
         <nav class="gn">
           <div class="gn_contents">
             <ul class="gn_header">
               <li class="gn_item gn_menuIcon">
-                <a href="#"><i class="xi-bars"></i></i> </a>
+                <label class="gn_label" for="gn_menuState">
+                  <span class="gn_menuState_top_box">
+                    <span class="gn_menuState_top"></span>
+                  </span>
+                  <span class="gn_menuState_bot_box">
+                    <span class="gn_menuState_bot"></span>
+                  </span>
+                </label>
               </li>
               <li class="gn_item gn_logo">
                 <a href="#"><i class="xi-apple"></i></a>
@@ -31,13 +42,10 @@
             <div class="gn_search_container">
               <form class="gn_search_form">
                 <i class="xi-search"></i>
-                <input placeholder="appple.com 검색">
+                <input placeholder="appple.com 검색" />
               </form>
             </div>
             <ul class="gn_list">
-              <li class="gn_item">
-                <a href="#">로고</a>
-              </li>
               <li class="gn_item gn_menu_item">
                 <a href="#">Mac</a>
               </li>
@@ -56,11 +64,34 @@
               <li class="gn_item gn_menu_item">
                 <a href="#">고객지원</a>
               </li>
+            </ul>
+            <ul class="gn_desktop_list">
               <li class="gn_item">
-                <a href="#">검색</a>
+                <a href="#"><i class="xi-apple"></i></a>
               </li>
               <li class="gn_item">
-                <a href="#">북마크</a>
+                <a href="#">Mac</a>
+              </li>
+              <li class="gn_item">
+                <a href="#">iPad</a>
+              </li>
+              <li class="gn_item">
+                <a href="#">iPhone</a>
+              </li>
+              <li class="gn_item">
+                <a href="#">Watch</a>
+              </li>
+              <li class="gn_item">
+                <a href="#">Music</a>
+              </li>
+              <li class="gn_item">
+                <a href="#">고객지원</a>
+              </li>
+              <li class="gn_item">
+                <a href="#"><i class="xi-search"></i></a>
+              </li>
+              <li class="gn_item">
+                <a href="#"><i class="xi-bookmark-o"></i></a>
               </li>
             </ul>
           </div>

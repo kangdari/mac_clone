@@ -148,6 +148,7 @@ button {
 a {
   color: #fff;
   text-decoration: none;
+  cursor: pointer;
 }
 
 input:focus {
