@@ -17,6 +17,9 @@
     }
   });
 
-  const ln_menu = document.querySelector(".ln_menu");
-  const ln_menu_btn = document.querySelector(".ln_menu_btn");
+  const back = document.querySelector(".back");
+  back.addEventListener("click", () => {
+    const ln_checkbox = document.querySelector("#ln_menuState");
+    ln_checkbox.checked = false;
+  });
 })();
