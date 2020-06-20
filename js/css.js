@@ -6,13 +6,17 @@
   });
 
   window.addEventListener("resize", () => {
-    const checkbox = document.querySelector("#gn_menuState");
-    if (
-      matchMedia("screen and (min-width: 768px)").matches &&
-      checkbox.checked
-    ) {
-      checkbox.checked = false;
-      document.body.classList.remove("gn_noScroll");
+    if (matchMedia("screen and (min-width: 768px)").matches) {
+      const checkbox = document.querySelector("#gn_menuState");
+      const ln_checkbox = document.querySelector("#ln_menuState");
+      if (checkbox.checked) {
+        document.body.classList.remove("gn_noScroll");
+        checkbox.checked = false;
+      }
+      if (ln_checkbox.checked) ln_checkbox.checked = false;
     }
   });
+
+  const ln_menu = document.querySelector(".ln_menu");
+  const ln_menu_btn = document.querySelector(".ln_menu_btn");
 })();
