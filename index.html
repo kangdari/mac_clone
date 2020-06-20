@@ -17,125 +17,256 @@
   </head>
   <body>
     <div id="container">
-      <header class="header">
-        <input type="checkbox" id="gn_menuState" />
-        <nav class="gn">
-          <div class="gn_contents">
-            <ul class="gn_header">
-              <li class="gn_item gn_menuIcon">
-                <label class="gn_label" for="gn_menuState">
-                  <span class="gn_menuState_top_box">
-                    <span class="gn_menuState_top"></span>
-                  </span>
-                  <span class="gn_menuState_bot_box">
-                    <span class="gn_menuState_bot"></span>
-                  </span>
+      <input type="checkbox" id="gn_menuState" />
+      <nav class="gn">
+        <div class="gn_contents">
+          <ul class="gn_header">
+            <li class="gn_item gn_menuIcon">
+              <label class="gn_label" for="gn_menuState">
+                <span class="gn_menuState_top_box">
+                  <span class="gn_menuState_top"></span>
+                </span>
+                <span class="gn_menuState_bot_box">
+                  <span class="gn_menuState_bot"></span>
+                </span>
+              </label>
+            </li>
+            <li class="gn_item gn_logo">
+              <a href="#"><i class="xi-apple"></i></a>
+            </li>
+            <li class="gn_item gn_mark">
+              <a href="#"><i class="xi-bookmark-o"></i></a>
+            </li>
+          </ul>
+          <div class="gn_search_container">
+            <form class="gn_search_form">
+              <i class="xi-search"></i>
+              <input placeholder="appple.com 검색" />
+            </form>
+          </div>
+          <ul class="gn_list">
+            <li class="gn_item gn_menu_item">
+              <a href="#">Mac</a>
+            </li>
+            <li class="gn_item gn_menu_item">
+              <a href="#">iPad</a>
+            </li>
+            <li class="gn_item gn_menu_item">
+              <a href="#">iPhone</a>
+            </li>
+            <li class="gn_item gn_menu_item">
+              <a href="#">Watch</a>
+            </li>
+            <li class="gn_item gn_menu_item">
+              <a href="#">Music</a>
+            </li>
+            <li class="gn_item gn_menu_item">
+              <a href="#">고객지원</a>
+            </li>
+          </ul>
+          <ul class="gn_desktop_list">
+            <li class="gn_item">
+              <a href="#"><i class="xi-apple"></i></a>
+            </li>
+            <li class="gn_item">
+              <a href="#">Mac</a>
+            </li>
+            <li class="gn_item">
+              <a href="#">iPad</a>
+            </li>
+            <li class="gn_item">
+              <a href="#">iPhone</a>
+            </li>
+            <li class="gn_item">
+              <a href="#">Watch</a>
+            </li>
+            <li class="gn_item">
+              <a href="#">Music</a>
+            </li>
+            <li class="gn_item">
+              <a href="#">고객지원</a>
+            </li>
+            <li class="gn_item">
+              <a href="#"><i class="xi-search"></i></a>
+            </li>
+            <li class="gn_item">
+              <a href="#"><i class="xi-bookmark-o"></i></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- local_nav -->
+      <input type="checkbox" id="ln_menuState" />
+      <nav class="ln">
+        <div class="ln_wrapper">
+          <div class="ln_background"></div>
+          <div class="ln_contents">
+            <div class="ln_title_box">
+              <a href="#">
+                <span class="ln_model">16형 모델</span>
+                <span class="ln_title">MacBook Pro</span>
+              </a>
+            </div>
+            <div class="ln_menu">
+              <ul class="ln_menu_items">
+                <li class="ln_menu_item">개요</li>
+                <li class="ln_menu_item"><a href="#">제품 사양</a></li>
+              </ul>
+              <ul class="ln_desktop_menu_items">
+                <li class="ln_desktop_menu_item">개요</li>
+                <li class="ln_desktop_menu_item">
+                  <a href="#">제품 사양</a>
+                </li>
+              </ul>
+              <div class="ln_actions">
+                <label for="ln_menuState" class="ln_label">
+                  <span class="ln_menu_btn"></span>
                 </label>
-              </li>
-              <li class="gn_item gn_logo">
-                <a href="#"><i class="xi-apple"></i></a>
-              </li>
-              <li class="gn_item gn_mark">
-                <a href="#"><i class="xi-bookmark-o"></i></a>
-              </li>
-            </ul>
-            <div class="gn_search_container">
-              <form class="gn_search_form">
-                <i class="xi-search"></i>
-                <input placeholder="appple.com 검색" />
-              </form>
-            </div>
-            <ul class="gn_list">
-              <li class="gn_item gn_menu_item">
-                <a href="#">Mac</a>
-              </li>
-              <li class="gn_item gn_menu_item">
-                <a href="#">iPad</a>
-              </li>
-              <li class="gn_item gn_menu_item">
-                <a href="#">iPhone</a>
-              </li>
-              <li class="gn_item gn_menu_item">
-                <a href="#">Watch</a>
-              </li>
-              <li class="gn_item gn_menu_item">
-                <a href="#">Music</a>
-              </li>
-              <li class="gn_item gn_menu_item">
-                <a href="#">고객지원</a>
-              </li>
-            </ul>
-            <ul class="gn_desktop_list">
-              <li class="gn_item">
-                <a href="#"><i class="xi-apple"></i></a>
-              </li>
-              <li class="gn_item">
-                <a href="#">Mac</a>
-              </li>
-              <li class="gn_item">
-                <a href="#">iPad</a>
-              </li>
-              <li class="gn_item">
-                <a href="#">iPhone</a>
-              </li>
-              <li class="gn_item">
-                <a href="#">Watch</a>
-              </li>
-              <li class="gn_item">
-                <a href="#">Music</a>
-              </li>
-              <li class="gn_item">
-                <a href="#">고객지원</a>
-              </li>
-              <li class="gn_item">
-                <a href="#"><i class="xi-search"></i></a>
-              </li>
-              <li class="gn_item">
-                <a href="#"><i class="xi-bookmark-o"></i></a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-        <!-- local_nav -->
-        <input type="checkbox" id="ln_menuState" />
-        <nav class="ln">
-          <div class="ln_wrapper">
-            <div class="ln_background"></div>
-            <div class="ln_contents">
-              <div class="ln_title_box">
-                <a href="#">
-                  <span class="ln_model">16형 모델</span>
-                  <span class="ln_title">MacBook Pro</span>
-                </a>
-              </div>
-              <div class="ln_menu">
-                <ul class="ln_menu_items">
-                  <li class="ln_menu_item">개요</li>
-                  <li class="ln_menu_item"><a href="#">제품 사양</a></li>
-                </ul>
-                <ul class="ln_desktop_menu_items">
-                  <li class="ln_desktop_menu_item">개요</li>
-                  <li class="ln_desktop_menu_item">
-                    <a href="#">제품 사양</a>
-                  </li>
-                </ul>
-                <div class="ln_actions">
-                  <label for="ln_menuState" class="ln_label">
-                    <span class="ln_menu_btn"></span>
-                  </label>
-                  <!-- label div -->
-                  <a href="#" class="ln_btn">구입하기</a>
-                </div>
+                <!-- label div -->
+                <a href="#" class="ln_btn">구입하기</a>
               </div>
             </div>
           </div>
-        </nav>
-        <div class="back"></div>
-      </header>
+        </div>
+      </nav>
+      <div class="back"></div>
       <main>
-        <section class="section_1"></section>
-        <section class="section_2"></section>
-        <section class="section_3"></section>
+        <section id="scroll_section_1" class="scroll_section">
+          <!-- stick_element 스크롤될 때 붙어있는 느낌으로 스타일링 ㄱ -->
+          <div class="stick_element main_message main_message1">
+            <div class="head_line">
+              <h1>MacBook Pro</h1>
+              <h2>
+                프로를 위해 프로가 만든 프로 노트북.
+              </h2>
+            </div>
+          </div>
+          <!-- canvas -->
+          <div
+            class="sticky_element main_message main_message2 section_content"
+          >
+            <p>
+              주어진 한계를 단호히 거부하고 세상을 바꿔나가는 선구자들. 그들을
+              위해 탄생한 새로운 MacBook Pro. 지금까지 Apple이 만든 노트북 중
+              가장 강력한 파워를 자랑합니다. 몰입감 넘치는 16형 Retina
+              디스플레이, 초고속 프로세서, 차세대 그래픽, MacBook Pro 사상 가장
+              큰 배터리 용량, 새로운 Magic Keyboard, 그리고 방대한 저장
+              용량까지. 궁극의 프로를 위한 궁극의 노트북이죠.
+            </p>
+            <p class="video">동영상 보기 <i class="xi-play xi-x"></i></p>
+          </div>
+        </section>
+        <section id="scroll_section_2" class="scroll_section">
+          <div class="section_content contents_container">
+            <!-- 노트북 이미지 -->
+            <img src="" alt="" />
+            <!-- flex 구조 -->
+            <div class="contents">
+              <div class="sticky_element main_message main_message1">
+                <p>
+                  <span class="bold">16형 Retina 디스플레이</span><br />
+                  화면에 빠져드는 시각적 경험
+                </p>
+                <div class="line"></div>
+              </div>
+              <div class="sticky_element main_message main_message2">
+                <p>
+                  <span class="bold">최대 8코어 프로세서</span><br />
+                  막대한 작업량도 너끈히 처리하는 파워
+                </p>
+                <div class="line"></div>
+              </div>
+              <div class="sticky_element main_message main_message3">
+                <p>
+                  <span class="bold">최대 8TB SSD 저장 장치</span><br />
+                  노트북 사상 가장 큰 용량
+                </p>
+                <div class="line"></div>
+              </div>
+              <div class="sticky_element main_message main_message4">
+                <p>
+                  <span class="bold">최대 64GB 메모리</span><br />
+                  대용량 파일 편집 및 부드러운 멀티태스킹 능력
+                </p>
+                <div class="line"></div>
+              </div>
+              <div class="sticky_element main_message main_message5">
+                <p>
+                  <span class="bold"> AMD Radeon Pro 5000M 시리즈 그래픽 </span
+                  ><br />
+                  고속 렌더링 및 매끄러운 재생 성능
+                </p>
+                <div class="line"></div>
+              </div>
+              <div class="sticky_element main_message main_message6">
+                <p>
+                  <span class="bold"
+                    >6 스피커 사운드 시스템 및 스튜디오급 마이크</span
+                  ><br />
+                  극적인 사운드 재생 및 월등히 깨끗한 녹음 품질
+                </p>
+                <div class="line"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="scroll_section_3" class="scroll_section">
+          <div class="section_content">
+            <h1>Retina 디스플레이</h1>
+            <h2>아이디어를 광활하게 펼칠 아름답고 광활한 작업 공간.</h2>
+          </div>
+          <!-- blend_canvas -->
+          <div class="sticky_element main_message1">
+            <p class="bold">Chris Burkard</p>
+            <p>모험 사진작가</p>
+          </div>
+          <div class="sticky_element main_message2">
+            <p class="bold">"한계는 넘기 위해 존재합니다."</p>
+            <p class="bold">Chris Burkard</p>
+          </div>
+          <div
+            class="sticky_element main_message main_message3 section_content"
+          >
+            <p>
+              새로운 MacBook Pro는 매혹적인
+              <span class="bold">16형 Retina 디스플레이를</span> 갖추고
+              있습니다. 이는 Mac 노트북 사상 가장 큰 Retina 디스플레이죠.
+              <span class="bold">500 니트 밝기</span>로 극적인 하이라이트와 밝은
+              화이트를 보여주는 동시에, 정교한 광배향 기술이 적용된 액정
+              분자들을 통해 짙은 블랙을 구현합니다. 여기에
+              <span class="bold">P3급 넓은 색영역</span>으로 사진과 동영상에
+              선명하고 생생한 느낌을 선사하죠. 이제 어디에서든 당신의 작업물을
+              가능한 한 최고의 모습으로 확인할 수 있습니다.
+            </p>
+          </div>
+          <div class="gallery_screen_container"></div>
+        </section>
+        <section id="scroll_section_4" class="scroll_section">
+          <!-- blen_canvas -->
+          <div class="sticky_element main_message1">
+            <span class="bold"
+              >"MacBook Pro 16형은 그야말로 게임 체인저입니다."</span
+            >
+            <p class="bold">Oak Felder</p>
+            <p>GRAMMY®️ 후보 <br />작곡가, 음악 프로듀서</p>
+          </div>
+          <div
+            class="sticky_element main_message main_message2 section_content"
+          >
+            <p>
+              16형 MacBook Pro는 노트북의 성능을 완전히 새로운 차원으로
+              끌어올립니다. 첨단 열관리 디자인을 도입했기 때문에 최대 8코어에
+              16스레드라는 어마어마한 프로세싱을 자랑하는
+              <span class="bold">Intel Core i9 프로세서</span>도
+              <span class="bold">더 강력한 성능</span>을 더 오래 발휘합니다.
+              쿼드 코어 MacBook Pro보다 최대 2.1배나 더 뛰어난 성능을 뿜어내죠.
+              그 결과 수십 개의 트랙을 다루는 음악 작업, 수십 개의 효과를
+              처리하는 이미지 작업, 3D 모델 렌더링, 코드 컴파일 또는 테스팅까지,
+              그 어떤 작업도 순식간에 해낼 수 있답니다.
+            </p>
+          </div>
+        </section>
+        <section id="scroll_section_5" class="scroll_section"></section>
       </main>
       <footer class="footer"></footer>
 
