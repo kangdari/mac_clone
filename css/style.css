@@ -85,6 +85,7 @@ body.open_menu {
   transform: translateY(-3px);
 }
 
+/* 영역을 차지하지 않도록 absolute 영역 설정 */
 .gn {
   min-height: 48px;
   width: 100%;
@@ -219,11 +220,15 @@ body.open_menu {
 }
 
 /* local nav */
+/* 영역을 차지하지 않도록 absolute 포지션으로 변경 */
 .ln {
-  position: relative;
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 100%;
   z-index: 9990;
-  height: 63px;
-  margin-top: 48px;
+  height: 76px;
+  /* margin-top: 48px; */
 }
 
 .ln .ln_background {
@@ -405,12 +410,8 @@ body.open_menu {
   transition: opacity 1s ease 0.1s;
   -webkit-transition: opacity 1s ease 0.1s;
 }
-/* 여기 */
-/* main */
-main {
-  margin-top: 30px;
-}
 
+/* main section */
 .head_line {
   width: 360px;
   margin: 0 auto;
