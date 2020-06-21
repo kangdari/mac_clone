@@ -17,7 +17,7 @@
     // section_2
     {
       type: "normal",
-      heightNum: 1,
+      heightNum: 2,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_2"),
