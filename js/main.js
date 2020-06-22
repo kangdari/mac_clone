@@ -9,7 +9,7 @@
     // section_1
     {
       type: "sticky", // sticky :
-      heightNum: 1,
+      heightNum: 2,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_1"),
@@ -17,9 +17,14 @@
         message2: document.querySelector("#scroll_section_1 .main_message2"),
         small_text: document.querySelector("#scroll_section_1 .section_small_text"),
         main_text: document.querySelector("#scroll_section_1 .section_main_text"),
+        // canvas 추가
+        canvas: document.querySelector("#video_canvas_1"), // section_1의 canvas 객체
+        context: document.querySelector("#video_canvas_1").getContext("2d"), // canvas의 context
+        videoImages: [],
       },
       values: {
-        // message1_opacity_out: [1, 0],
+        videoImgCounts: 122, // img 개수
+        imgSequence: [0, 121], // 시작, 끝 인덱스
         message1_opacity_out: [1, 0, { start: 0.1, end: 0.3 }],
       },
     },
@@ -68,7 +73,7 @@
     // section_4
     {
       type: "sticky",
-      heightNum: 4,
+      heightNum: 2,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_4"),
@@ -81,6 +86,16 @@
       },
     },
   ];
+
+  // canvas에 그릴 img 배열 설정
+  const setCanvasImg = () => {
+    let imgElem;
+    for (let i = 0; i < sectionInfo[0].values.videoImgCounts; i++) {
+      imgElem = new Image();
+      imgElem.src = `../video/macbook/${i}.jpg`;
+      sectionInfo[0].obj.videoImages.push(imgElem);
+    }
+  };
 
   // 섹션 높이 설정
   const setLayout = () => {
@@ -143,6 +158,10 @@
 
     switch (currentSection) {
       case 0:
+        // 배열의 인덱스는 정수
+        let sequence = Math.round(calcValue(values.imgSequence, currentYoffset));
+        // canvas에 그리기
+        obj.context.drawImage(obj.videoImages[sequence], 0, 0);
         // 스크롤 구간에 따른 분기 처리
         if (scrollRatio <= 0.3) {
           obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
@@ -236,4 +255,5 @@
     obj.message2.style.opacity = "1";
     obj.message2.style.transform = "translateY(0)";
   });
+  setCanvasImg();
 })();

@@ -414,7 +414,7 @@ body.open_menu {
 .sticky_element {
   display: none;
   position: fixed;
-  top: 0;
+  /* top: 0; */
   left: 0;
   right: 0;
   width: 100%;
@@ -424,6 +424,9 @@ body.open_menu {
 #show_section_3 #scroll_section_3 .sticky_element,
 #show_section_4 #scroll_section_4 .sticky_element {
   display: block;
+}
+.sticky_element_canvas {
+  top: 0;
 }
 
 .main_message {
@@ -510,6 +513,7 @@ body.open_menu {
 /* 위치 조정 */
 #scroll_section_1 .main_message1 {
   position: relative;
+  z-index: 10;
   top: -40vh;
 }
 
