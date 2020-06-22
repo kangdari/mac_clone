@@ -221,6 +221,12 @@ body.open_menu {
 
 /* local nav */
 /* 영역을 차지하지 않도록 absolute 포지션으로 변경 */
+.ln_sticky .ln {
+  position: sticky;
+  top: 0;
+  background-color: rgba(252, 255, 255, 0.1);
+  backdrop-filter: saturate(180%) blur(15px);
+}
 .ln {
   position: absolute;
   top: 48px;
@@ -523,7 +529,7 @@ body.open_menu {
 
 #scroll_section_2 .contents_container {
   position: absolute;
-  top: 30vh;
+  /* top: 30vh; */
   left: 0;
   right: 0;
 }

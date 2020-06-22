@@ -38,12 +38,12 @@
         message6: document.querySelector("#scroll_section_2 .main_message6"),
       },
       values: {
-        message1_opacity_out: [0, 1, { start: 0, end: 0.1 }],
-        message2_opacity_out: [0, 1, { start: 0, end: 0.1 }],
-        message3_opacity_out: [0, 1, { start: 0.1, end: 0.2 }],
-        message4_opacity_out: [0, 1, { start: 0.1, end: 0.2 }],
-        message5_opacity_out: [0, 1, { start: 0.2, end: 0.3 }],
-        message6_opacity_out: [0, 1, { start: 0.2, end: 0.3 }],
+        message1_opacity_out: [0, 1, { start: 0.1, end: 0.2 }],
+        message2_opacity_out: [0, 1, { start: 0.1, end: 0.2 }],
+        message3_opacity_out: [0, 1, { start: 0.2, end: 0.3 }],
+        message4_opacity_out: [0, 1, { start: 0.2, end: 0.3 }],
+        message5_opacity_out: [0, 1, { start: 0.3, end: 0.4 }],
+        message6_opacity_out: [0, 1, { start: 0.3, end: 0.4 }],
       },
     },
     // section_3
@@ -124,7 +124,6 @@
     const currentYoffset = yOffset - prevScrollHeight;
     const scrollHeight = sectionInfo[currentSection].scrollHeight; // 현재 섹션 높이
     const scrollRatio = currentYoffset / scrollHeight; // 현재 섹션에서의 스크롤 위치 비율
-    console.log(scrollRatio);
     switch (currentSection) {
       case 0:
         // 스크롤 구간에 따른 분기 처리
@@ -146,6 +145,15 @@
         break;
       case 3:
         break;
+    }
+  };
+
+  const checkMenu = () => {
+    // gn 높이 48px
+    if (yOffset > 48) {
+      document.body.classList.add("ln_sticky");
+    } else {
+      document.body.classList.remove("ln_sticky");
     }
   };
 
@@ -178,6 +186,7 @@
 
   window.addEventListener("scroll", () => {
     yOffset = window.pageYOffset;
+    checkMenu();
     scrollLoop();
   });
 
