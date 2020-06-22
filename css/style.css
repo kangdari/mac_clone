@@ -429,6 +429,7 @@ body.open_menu {
 .main_message {
   opacity: 0;
   /* background: lightgrey; */
+  top: 35vh;
 }
 
 .head_line {
@@ -493,7 +494,7 @@ body.open_menu {
 }
 .scroll_section {
   position: relative;
-  /* border: 2px solid green; */
+  border: 2px solid green;
   padding-top: 60vh;
   word-break: keep-all;
 }
