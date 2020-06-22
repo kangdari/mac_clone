@@ -431,20 +431,22 @@ body.open_menu {
 
 .main_message {
   background: lightgrey;
-  /* opacity: 0; */
 }
 
 .head_line {
-  opacity: 0;
-  transform: translateY(15%);
-  transition: all 1.5s ease;
   width: 360px;
   margin: 0 auto;
 }
 .section_small_text {
+  opacity: 0;
+  transform: translateY(50%);
+  transition: all 1s linear;
   font-size: 24px;
 }
 .section_main_text {
+  opacity: 0;
+  transform: translateY(20%);
+  transition: all 1s linear;
   font-size: 46px;
 }
 .video_text {
@@ -518,7 +520,7 @@ body.open_menu {
 #scroll_section_1 .main_message2 {
   margin-top: 50px;
   opacity: 0;
-  transform: translateY(15%);
+  transform: translateY(10%);
   transition: all 1.5s ease;
 }
 

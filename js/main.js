@@ -15,10 +15,16 @@
         container: document.querySelector("#scroll_section_1"),
         message1: document.querySelector("#scroll_section_1 .main_message1"),
         message2: document.querySelector("#scroll_section_1 .main_message2"),
+        small_text: document.querySelector(
+          "#scroll_section_1 .section_small_text"
+        ),
+        main_text: document.querySelector(
+          "#scroll_section_1 .section_main_text"
+        ),
       },
-      value: {
-        message1_opacity_out: [0, 1],
-        // message1_opacity_out: [1, 0, { start: 0, end: 0.2 }],
+      values: {
+        // message1_opacity_out: [1, 0],
+        message1_opacity_out: [1, 0, { start: 0, end: 0.1 }],
       },
     },
     // section_2
@@ -76,27 +82,53 @@
 
   const calcValue = (values, currentYoffset) => {
     let result;
+    // 현재 섹션 높이
+    const scrollHeight = sectionInfo[currentSection].scrollHeight;
     // 현재 섹션에서의 스크롤 위치 비율
-    let scrollRatio = currentYoffset / sectionInfo[currentSection].scrollHeight;
-    // 전체 범위 = 끝점 - 시작점
-    // result = 현재 섹션 스크롤 비율 * (전체 범위) + 시작점
-    // result는 현재 스크롤 위치에 해당하는 value 값
-    result = scrollRatio * (value[1] - value[0]) + value[0];
+    let scrollRatio = currentYoffset / scrollHeight;
+
+    // 시작, 끝 점이 있을 때
+    if (!!values[2]) {
+      const startPoint = scrollHeight * values[2].start; // 섹션에서 시작 위치 비율
+      const endPoint = scrollHeight * values[2].end; // 섹션에서 끝점 위치 비율
+      const animationPoint = endPoint - startPoint;
+      if (currentYoffset >= startPoint && currentYoffset <= endPoint) {
+        // animationPoint 구간에서의 스크롤 위치 비율
+        result =
+          ((currentYoffset - startPoint) / animationPoint) *
+            (values[1] - values[0]) +
+          values[0];
+      } else if (currentYoffset < startPoint) {
+        result = values[0];
+      } else if (currentYoffset > endPoint) {
+        result = values[1];
+      }
+    } else {
+      // 전체 범위 = 끝점 - 시작점
+      // result = 현재 섹션 스크롤 비율 * (전체 범위) + 시작점
+      // result는 현재 스크롤 위치에 해당하는 value 값
+      result = scrollRatio * (values[1] - values[0]) + values[0];
+    }
     return result;
   };
 
   const playAnimation = () => {
     const obj = sectionInfo[currentSection].obj;
-    const value = sectionInfo[currentSection].value;
+    const values = sectionInfo[currentSection].values;
     // 현재 섹션에서의 스크롤 위치 값
     const currentYoffset = yOffset - prevScrollHeight;
+    const scrollHeight = sectionInfo[currentSection].scrollHeight; // 현재 섹션 높이
+    const scrollRatio = currentYoffset / scrollHeight; // 현재 섹션에서의 스크롤 위치 비율
     switch (currentSection) {
       case 0:
         let message1_opacity_out = calcValue(
-          value.message1_opacity_out,
+          values.message1_opacity_out,
           currentYoffset
         );
-        obj.message1.style.opacity = `${message1_opacity_out}`;
+        // 스크롤 구간에 따른 분기 처리
+        if (scrollRatio <= 0.1) {
+          obj.message1.style.opacity = `${message1_opacity_out}`;
+        }
         break;
       case 1:
         break;
@@ -143,15 +175,13 @@
   // window.addEventListener("load", setLayout);
   window.addEventListener("load", () => {
     setLayout();
-    // opacity, transform
-    const head_line = document.querySelector(".head_line");
-    const section1_message = document.querySelector(
-      "#scroll_section_1 .main_message2"
-    );
-
-    head_line.style.opacity = "1";
-    head_line.style.transform = "translateY(0)";
-    section1_message.style.opacity = "1";
-    section1_message.style.transform = "translateY(0)";
+    // 문서 첫 로드시 transition 이벤트
+    const obj = sectionInfo[0].obj;
+    obj.small_text.style.opacity = "1";
+    obj.small_text.style.transform = "translateY(0)";
+    obj.main_text.style.opacity = "1";
+    obj.main_text.style.transform = "translateY(0)";
+    obj.message2.style.opacity = "1";
+    obj.message2.style.transform = "translateY(0)";
   });
 })();
