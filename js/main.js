@@ -9,31 +9,41 @@
     // section_1
     {
       type: "sticky", // sticky :
-      heightNum: 2,
+      heightNum: 1,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_1"),
         message1: document.querySelector("#scroll_section_1 .main_message1"),
         message2: document.querySelector("#scroll_section_1 .main_message2"),
-        small_text: document.querySelector(
-          "#scroll_section_1 .section_small_text"
-        ),
-        main_text: document.querySelector(
-          "#scroll_section_1 .section_main_text"
-        ),
+        small_text: document.querySelector("#scroll_section_1 .section_small_text"),
+        main_text: document.querySelector("#scroll_section_1 .section_main_text"),
       },
       values: {
         // message1_opacity_out: [1, 0],
-        message1_opacity_out: [1, 0, { start: 0, end: 0.1 }],
+        message1_opacity_out: [1, 0, { start: 0, end: 0.2 }],
       },
     },
     // section_2
     {
       type: "normal",
-      heightNum: 2,
+      heightNum: 1,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_2"),
+        message1: document.querySelector("#scroll_section_2 .main_message1"),
+        message2: document.querySelector("#scroll_section_2 .main_message2"),
+        message3: document.querySelector("#scroll_section_2 .main_message3"),
+        message4: document.querySelector("#scroll_section_2 .main_message4"),
+        message5: document.querySelector("#scroll_section_2 .main_message5"),
+        message6: document.querySelector("#scroll_section_2 .main_message6"),
+      },
+      values: {
+        message1_opacity_out: [0, 1, { start: 0, end: 0.1 }],
+        message2_opacity_out: [0, 1, { start: 0, end: 0.1 }],
+        message3_opacity_out: [0, 1, { start: 0.1, end: 0.2 }],
+        message4_opacity_out: [0, 1, { start: 0.1, end: 0.2 }],
+        message5_opacity_out: [0, 1, { start: 0.2, end: 0.3 }],
+        message6_opacity_out: [0, 1, { start: 0.2, end: 0.3 }],
       },
     },
     // section_3
@@ -59,11 +69,8 @@
   // 섹션 높이 설정
   const setLayout = () => {
     for (let i = 0; i < sectionInfo.length; i++) {
-      sectionInfo[i].scrollHeight =
-        sectionInfo[i].heightNum * window.innerHeight;
-      sectionInfo[
-        i
-      ].obj.container.style.height = `${sectionInfo[i].scrollHeight}px`;
+      sectionInfo[i].scrollHeight = sectionInfo[i].heightNum * window.innerHeight;
+      sectionInfo[i].obj.container.style.height = `${sectionInfo[i].scrollHeight}px`;
     }
     // 현재 스크롤 위치
     yOffset = window.pageYOffset;
@@ -95,9 +102,7 @@
       if (currentYoffset >= startPoint && currentYoffset <= endPoint) {
         // animationPoint 구간에서의 스크롤 위치 비율
         result =
-          ((currentYoffset - startPoint) / animationPoint) *
-            (values[1] - values[0]) +
-          values[0];
+          ((currentYoffset - startPoint) / animationPoint) * (values[1] - values[0]) + values[0];
       } else if (currentYoffset < startPoint) {
         result = values[0];
       } else if (currentYoffset > endPoint) {
@@ -119,18 +124,23 @@
     const currentYoffset = yOffset - prevScrollHeight;
     const scrollHeight = sectionInfo[currentSection].scrollHeight; // 현재 섹션 높이
     const scrollRatio = currentYoffset / scrollHeight; // 현재 섹션에서의 스크롤 위치 비율
+    console.log(scrollRatio);
     switch (currentSection) {
       case 0:
-        let message1_opacity_out = calcValue(
-          values.message1_opacity_out,
-          currentYoffset
-        );
         // 스크롤 구간에 따른 분기 처리
-        if (scrollRatio <= 0.1) {
-          obj.message1.style.opacity = `${message1_opacity_out}`;
+        if (scrollRatio <= 0.3) {
+          obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
         }
         break;
       case 1:
+        // section_2
+        obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
+        obj.message2.style.opacity = calcValue(values.message2_opacity_out, currentYoffset);
+        obj.message3.style.opacity = calcValue(values.message3_opacity_out, currentYoffset);
+        obj.message4.style.opacity = calcValue(values.message4_opacity_out, currentYoffset);
+        obj.message5.style.opacity = calcValue(values.message5_opacity_out, currentYoffset);
+        obj.message6.style.opacity = calcValue(values.message6_opacity_out, currentYoffset);
+
         break;
       case 2:
         break;
