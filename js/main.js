@@ -20,7 +20,7 @@
       },
       values: {
         // message1_opacity_out: [1, 0],
-        message1_opacity_out: [1, 0, { start: 0, end: 0.2 }],
+        message1_opacity_out: [1, 0, { start: 0.1, end: 0.3 }],
       },
     },
     // section_2
@@ -150,7 +150,7 @@
 
   const checkMenu = () => {
     // gn 높이 48px
-    if (yOffset > 48) {
+    if (yOffset >= 48) {
       document.body.classList.add("ln_sticky");
     } else {
       document.body.classList.remove("ln_sticky");
