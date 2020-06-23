@@ -117,6 +117,10 @@
     }
     // 현재 활성화 섹션을 body의 id 값으로 설정
     document.body.setAttribute("id", `show_section_${currentSection + 1}`);
+
+    // canvas 크기 설정
+    // const heightRatio = window.innerHeight / 1080;
+    sectionInfo[0].obj.canvas.style.transform = `translate3d(-50%, 0, 0)`;
   };
 
   const calcValue = (values, currentYoffset) => {
@@ -162,7 +166,7 @@
         // 스크롤 구간에 따른 분기 처리
         if (scrollRatio <= 0.25) {
           obj.message1.style.opacity = calcValue(values.message1_opacity, currentYoffset);
-          obj.message1.style.transform = `translate3d(0, ${calcValue(
+          obj.message1.style.transform = `translate3d(-50%, ${calcValue(
             values.message1_transform,
             currentYoffset
           )}%, 0)`;
