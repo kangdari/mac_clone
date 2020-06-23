@@ -508,8 +508,9 @@ body.open_menu {
 }
 .scroll_section {
   position: relative;
-  border: 2px solid green;
+  /* border: 2px solid green; */
   word-break: keep-all;
+  padding-top: 35vh;
 }
 
 .bold {
@@ -519,9 +520,14 @@ body.open_menu {
   color: black;
 }
 /* section 1 */
+
+#scroll_section_1.scroll_section {
+  padding: 0;
+}
+
 #scroll_section_1 .sticky_container {
   position: sticky;
-  padding-top: 170px;
+  padding-top: 124px;
   top: 0;
   /* height: auto; */
 }
@@ -530,6 +536,7 @@ body.open_menu {
 #scroll_section_1 .main_message1 {
   position: absolute;
   z-index: 10;
+  top: 15%;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -552,13 +559,29 @@ body.open_menu {
 /* section 2 */
 #scroll_section_2 {
 }
-
+/* 작업 시작 */
 #scroll_section_2 .contents_container {
+  position: relative;
+  height: 100%;
+  top: 13%;
+}
+
+#scroll_section_2 .contents_container figure {
   position: absolute;
-  /* top: 30vh; */
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1440px;
+  height: 660px;
+}
+
+/* 의미 없는듯 삭제 예정 */
+/* contents_container 이름을 위해서 사용할 것 */
+/* #scroll_section_2 .contents_container {
+  position: absolute;
   left: 0;
   right: 0;
-}
+} */
 
 #scroll_section_2 .contents_container .contents {
   padding-top: 1.5rem;
@@ -570,9 +593,6 @@ body.open_menu {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-#scroll_section_2 .contents_container .contents .main_message span {
-  color: black;
 }
 
 #scroll_section_2 .line {
@@ -655,7 +675,7 @@ body.open_menu {
     flex-wrap: wrap;
   }
   #scroll_section_2 .contents_container .contents .main_message {
-    flex-basis: 40%;
+    flex-basis: 35%;
   }
   #scroll_section_2 .line {
     margin: 20px 0;

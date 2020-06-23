@@ -9,7 +9,7 @@
     // section_1
     {
       type: "sticky",
-      heightNum: 3,
+      heightNum: 2.5,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_1"),
@@ -44,12 +44,18 @@
         message6: document.querySelector("#scroll_section_2 .main_message6"),
       },
       values: {
-        message1_opacity: [0, 1, { start: 0.1, end: 0.2 }],
-        message2_opacity: [0, 1, { start: 0.1, end: 0.2 }],
-        message3_opacity: [0, 1, { start: 0.2, end: 0.3 }],
-        message4_opacity: [0, 1, { start: 0.2, end: 0.3 }],
-        message5_opacity: [0, 1, { start: 0.3, end: 0.4 }],
-        message6_opacity: [0, 1, { start: 0.3, end: 0.4 }],
+        message1_opacity: [0, 1, { start: 0.03, end: 0.13 }],
+        message2_opacity: [0, 1, { start: 0.03, end: 0.13 }],
+        message3_opacity: [0, 1, { start: 0.1, end: 0.2 }],
+        message4_opacity: [0, 1, { start: 0.1, end: 0.2 }],
+        message5_opacity: [0, 1, { start: 0.17, end: 0.27 }],
+        message6_opacity: [0, 1, { start: 0.17, end: 0.27 }],
+        message1_transform: [15, 0, { start: 0.03, end: 0.13 }],
+        message2_transform: [15, 0, { start: 0.03, end: 0.13 }],
+        message3_transform: [15, 0, { start: 0.1, end: 0.2 }],
+        message4_transform: [15, 0, { start: 0.1, end: 0.2 }],
+        message5_transform: [15, 0, { start: 0.17, end: 0.27 }],
+        message6_transform: [15, 0, { start: 0.17, end: 0.27 }],
       },
     },
     // section_3
@@ -186,6 +192,31 @@
         obj.message4.style.opacity = calcValue(values.message4_opacity, currentYoffset);
         obj.message5.style.opacity = calcValue(values.message5_opacity, currentYoffset);
         obj.message6.style.opacity = calcValue(values.message6_opacity, currentYoffset);
+        obj.message1.style.transform = `translate3d(0, ${calcValue(
+          values.message1_transform,
+          currentYoffset
+        )}%,0)`;
+        obj.message2.style.transform = `translate3d(0, ${calcValue(
+          values.message2_transform,
+          currentYoffset
+        )}%,0)`;
+        obj.message3.style.transform = `translate3d(0, ${calcValue(
+          values.message3_transform,
+          currentYoffset
+        )}%,0)`;
+        obj.message4.style.transform = `translate3d(0, ${calcValue(
+          values.message4_transform,
+          currentYoffset
+        )}%,0)`;
+        obj.message5.style.transform = `translate3d(0, ${calcValue(
+          values.message5_transform,
+          currentYoffset
+        )}%,0)`;
+        obj.message6.style.transform = `translate3d(0, ${calcValue(
+          values.message6_transform,
+          currentYoffset
+        )}%,0)`;
+
         break;
       case 2:
         // section_3
@@ -222,6 +253,7 @@
 
   // 스크롤 이벤트 발생 시 현재 섹션 계산 후 반영
   const scrollLoop = () => {
+    console.log(currentSection);
     changeSection = false;
     // 현재 섹션의 이전 섹션들의 높이 합
     prevScrollHeight = 0;
