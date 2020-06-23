@@ -264,7 +264,7 @@ body.open_menu {
   left: 0;
   right: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 
 .ln .ln_contents {
@@ -414,7 +414,6 @@ body.open_menu {
 .sticky_element {
   display: none;
   position: fixed;
-  /* top: 0; */
   left: 0;
   right: 0;
   width: 100%;
@@ -426,12 +425,15 @@ body.open_menu {
   display: block;
 }
 .sticky_element_canvas {
+  position: relative;
+  z-index: -1;
   top: 0;
+  margin-top: 10px;
+  margin-bottom: 100px;
 }
 
 .main_message {
   opacity: 0;
-  /* background: lightgrey; */
   top: 35vh;
 }
 
@@ -498,7 +500,6 @@ body.open_menu {
 .scroll_section {
   position: relative;
   border: 2px solid green;
-  padding-top: 60vh;
   word-break: keep-all;
 }
 
@@ -508,13 +509,19 @@ body.open_menu {
 .black {
   color: black;
 }
-
 /* section 1 */
+#scroll_section_1 .sticky_container {
+  position: sticky;
+  padding-top: 170px;
+  top: 0;
+  /* height: auto; */
+}
+
 /* 위치 조정 */
 #scroll_section_1 .main_message1 {
-  position: relative;
+  position: absolute;
   z-index: 10;
-  top: -40vh;
+  /* left: 50%; */
 }
 
 #scroll_section_1 .head_line h1 {
@@ -756,6 +763,7 @@ body.open_menu {
 
   .ln .ln_contents {
     display: flex;
+    height: 100%;
   }
 
   .ln .ln_menu {
@@ -782,7 +790,7 @@ body.open_menu {
     width: 100px;
     justify-content: space-between;
     font-size: 12px;
-    align-items: flex-end;
+    align-items: center;
     padding-bottom: 5px;
   }
 

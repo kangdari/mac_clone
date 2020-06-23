@@ -8,8 +8,8 @@
   const sectionInfo = [
     // section_1
     {
-      type: "sticky", // sticky :
-      heightNum: 2,
+      type: "sticky",
+      heightNum: 3,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_1"),
@@ -24,8 +24,9 @@
       },
       values: {
         videoImgCounts: 122, // img 개수
-        imgSequence: [0, 121], // 시작, 끝 인덱스
-        message1_opacity_out: [1, 0, { start: 0.1, end: 0.3 }],
+        imgSequence: [0, 121, { start: 0, end: 0.5 }], // 시작, 끝 인덱스
+        message1_opacity: [1, 0, { start: 0, end: 0.2 }],
+        message1_transform: [0, -90, { start: 0, end: 0.2 }],
       },
     },
     // section_2
@@ -158,13 +159,19 @@
 
     switch (currentSection) {
       case 0:
-        // 배열의 인덱스는 정수
-        let sequence = Math.round(calcValue(values.imgSequence, currentYoffset));
-        // canvas에 그리기
-        obj.context.drawImage(obj.videoImages[sequence], 0, 0);
         // 스크롤 구간에 따른 분기 처리
-        if (scrollRatio <= 0.3) {
-          obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
+        if (scrollRatio <= 0.25) {
+          obj.message1.style.opacity = calcValue(values.message1_opacity, currentYoffset);
+          obj.message1.style.transform = `translate3d(0, ${calcValue(
+            values.message1_transform,
+            currentYoffset
+          )}%, 0)`;
+        }
+        if (scrollRatio <= 0.55) {
+          // 배열의 인덱스는 정수
+          let sequence = Math.round(calcValue(values.imgSequence, currentYoffset));
+          // canvas에 그리기
+          obj.context.drawImage(obj.videoImages[sequence], 0, 0);
         }
         break;
       case 1:
