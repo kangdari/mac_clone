@@ -32,7 +32,7 @@
     // section_2
     {
       type: "normal",
-      heightNum: 1,
+      heightNum: 1.04,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_2"),
@@ -253,7 +253,6 @@
 
   // 스크롤 이벤트 발생 시 현재 섹션 계산 후 반영
   const scrollLoop = () => {
-    console.log(currentSection);
     changeSection = false;
     // 현재 섹션의 이전 섹션들의 높이 합
     prevScrollHeight = 0;
