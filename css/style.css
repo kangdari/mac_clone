@@ -481,7 +481,6 @@ body.open_menu {
 }
 /* 섹션 컨테이너 너비 */
 .section_content {
-  /* width: 87.5%; */
   max-width: 360px;
   margin: 0 auto;
 }
@@ -507,7 +506,7 @@ body.open_menu {
 }
 .scroll_section {
   position: relative;
-  border: 2px solid green;
+  /* border: 2px solid green; */
   word-break: keep-all;
   padding-top: 35vh;
 }
@@ -597,8 +596,18 @@ body.open_menu {
 }
 
 /* section 3 */
+/* blend_canvas 중앙 정렬을 위한 flex 설정 */
+#scroll_section_3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #scroll_section_3 .section_content h1 {
   color: var(--grey--color);
+}
+
+#scroll_section_3 .image_blend_canvas {
 }
 
 #scroll_section_3 .main_message1 {
@@ -618,6 +627,8 @@ body.open_menu {
 #scroll_section_4 .section_content h1 {
   color: var(--grey--color);
 }
+
+/* blend_canvas */
 
 #scroll_section_4 .main_message1 {
   max-width: 270px;

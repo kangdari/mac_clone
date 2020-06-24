@@ -61,13 +61,17 @@
     // section_3
     {
       type: "sticky",
-      heightNum: 2,
+      heightNum: 4,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_3"),
         message1: document.querySelector("#scroll_section_3 .main_message1"),
         message2: document.querySelector("#scroll_section_3 .main_message2"),
         message3: document.querySelector("#scroll_section_3 .main_message3"),
+        canvas: document.querySelector("#scroll_section_3 .image_blend_canvas"),
+        context: document.querySelector("#scroll_section_3 .image_blend_canvas").getContext("2d"),
+        imagesPath: ["../image/section_4_img_1.jpg", "../image/section_4_img_2.jpg"],
+        images: [],
       },
       values: {
         message1_opacity: [0, 1, { start: 0, end: 0.2 }],
@@ -75,6 +79,9 @@
         message2_opacity_out: [1, 0, { start: 0.65, end: 0.75 }],
         message3_opacity: [0, 1, { start: 0.2, end: 0.3 }],
         message3_transform: [10, 0, { start: 0.2, end: 0.3 }],
+        // 화면 크기에 따라 값이 변하기때문에 스크롤 이벤트 발생 시 값 설정
+        rect_left_X: [0, 0, { start: 0, end: 0 }],
+        rect_right_X: [0, 0, { start: 0, end: 0 }],
       },
     },
     // section_4
@@ -101,6 +108,14 @@
       imgElem = new Image();
       imgElem.src = `../video/macbook/${i}.jpg`;
       sectionInfo[0].obj.videoImages.push(imgElem);
+    }
+
+    // section_3
+    let imgElem3;
+    for (let i = 0; i < sectionInfo[2].obj.imagesPath.length; i++) {
+      imgElem3 = new Image();
+      imgElem3.src = sectionInfo[2].obj.imagesPath[i];
+      sectionInfo[2].obj.images.push(imgElem3);
     }
   };
 
@@ -220,8 +235,47 @@
         break;
       case 2:
         // section_3
-        obj.message1.style.opacity = calcValue(values.message1_opacity, currentYoffset);
+        // blend_canvas
+        // 브라우저 크기에 맞춰 캔버스 크기를 조절하기 위해서 width, height 비율 계산
+        const widthRatio = window.innerWidth / obj.canvas.width;
+        const heightRatio = window.innerHeight / obj.canvas.height;
+        console.log(widthRatio, heightRatio);
+        // canvas에 적용할 비율
+        let canvasRatio;
 
+        if (widthRatio <= heightRatio) {
+          // 캔버스보다 브라우저 창이 납작
+          canvasRatio = heightRatio;
+        } else {
+          // 캔버스보다 브라우저 창이 홀쭉
+          canvasRatio = widthRatio;
+        }
+        console.log(canvasRatio);
+        // canvas 크기 조절 및 img 그리기
+        obj.canvas.style.transform = `scale(${canvasRatio})`;
+        obj.context.drawImage(obj.images[0], 0, 0, 1920, 1080);
+
+        // 컨버스 크기에 맞춰 가정한 innerWidth, innerHeight
+        const recalculatedInnerWidth = window.innerWidth / canvasRatio;
+        const recalculatedInnerHeight = window.innerHeight / canvasRatio;
+
+        const whiteRectWidth = recalculatedInnerWidth * 0.15;
+        values.rect_left_X[0] = (obj.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰박스 시작점
+        values.rect_left_X[1] = values.rect_left_X[0] - whiteRectWidth; // 왼쪽 흰박스 끝점
+        values.rect_right_X[0] = values.rect_left_X[0] + recalculatedInnerWidth - whiteRectWidth; // 우측 박스 흰박스 시작점
+        values.rect_right_X[1] = values.rect_right_X[0] + whiteRectWidth; // 끝점
+
+        obj.context.fillStyle = "white";
+        // 좌 우 흰박스 그리기
+        obj.context.fillRect(values.rect_left_X[0], 0, parseInt(whiteRectWidth), obj.canvas.height);
+        obj.context.fillRect(
+          values.rect_right_X[0],
+          0,
+          parseInt(whiteRectWidth),
+          obj.canvas.height
+        );
+
+        obj.message1.style.opacity = calcValue(values.message1_opacity, currentYoffset);
         obj.message3.style.opacity = calcValue(values.message3_opacity, currentYoffset);
         obj.message3.style.transform = `translate3d(0, ${calcValue(
           values.message3_transform,
@@ -232,12 +286,12 @@
         } else {
           obj.message2.style.opacity = calcValue(values.message2_opacity_out, currentYoffset);
         }
+
         break;
       case 3:
         // section_4
         obj.message1.style.opacity = calcValue(values.message1_opacity, currentYoffset);
         obj.message2.style.opacity = calcValue(values.message2_opacity, currentYoffset);
-
         break;
     }
   };
