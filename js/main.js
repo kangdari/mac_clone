@@ -233,6 +233,52 @@
           currentYoffset
         )}%,0)`;
 
+        // 미리 section_3 blend_canvas 그리기
+        if (scrollRatio > 0.8) {
+          const obj = sectionInfo[2].obj;
+          const values = sectionInfo[2].values;
+          const widthRatio = window.innerWidth / obj.canvas.width;
+          const heightRatio = window.innerHeight / obj.canvas.height;
+          // canvas에 적용할 비율
+          let canvasRatio;
+
+          if (widthRatio <= heightRatio) {
+            // 캔버스보다 브라우저 창이 홀쭉
+            canvasRatio = heightRatio;
+          } else {
+            // 캔버스보다 브라우저 창이 납작
+            canvasRatio = widthRatio;
+          }
+          // canvas 크기 조절 및 img 그리기
+          obj.canvas.style.transform = `scale(${canvasRatio})`;
+          obj.context.drawImage(obj.images[0], 0, 0, 1920, 1080);
+
+          // 컨버스 크기에 맞춰 가정한 innerWidth, innerHeight
+          // document.body.offsetWidth: 스크롤 너비를 제외한 화면 넓이
+          const recalculatedInnerWidth = document.body.offsetWidth / canvasRatio;
+          // const recalculatedInnerHeight = window.innerHeight / canvasRatio;
+
+          const whiteRectWidth = recalculatedInnerWidth * 0.15;
+          values.rect_left_X[0] = (obj.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰박스 시작점
+          values.rect_left_X[1] = values.rect_left_X[0] - whiteRectWidth; // 왼쪽 흰박스 끝점
+          values.rect_right_X[0] = values.rect_left_X[0] + recalculatedInnerWidth - whiteRectWidth; // 우측 박스 흰박스 시작점
+          values.rect_right_X[1] = values.rect_right_X[0] + whiteRectWidth; // 끝점
+
+          obj.context.fillStyle = "white";
+          // 좌 우 흰박스 그리기
+          obj.context.fillRect(
+            values.rect_left_X[0],
+            0,
+            parseInt(whiteRectWidth),
+            obj.canvas.height
+          );
+          obj.context.fillRect(
+            values.rect_right_X[0],
+            0,
+            parseInt(whiteRectWidth),
+            obj.canvas.height
+          );
+        }
         break;
       case 2:
         // section_3
