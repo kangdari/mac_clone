@@ -82,7 +82,12 @@
         // 화면 크기에 따라 값이 변하기때문에 스크롤 이벤트 발생 시 값 설정
         rect_left_X: [0, 0, { start: 0, end: 0 }],
         rect_right_X: [0, 0, { start: 0, end: 0 }],
-        rectStartY: 0, // blend_canvas 애니메이션 시작점 설정
+        // blend_canvas 애니메이션 첫번째 이미지 시작점 설정을 위한 값
+        rectStartY: 0,
+        // blend_canvas의 image blend 애니메이션 설정(두 번째 이미지)
+        imageBlendPoint: [0, 0, { start: 0, end: 0 }],
+        // canvas 축소 옵션
+        canvas_scale: [0, 0, { start: 0, end: 0 }],
       },
     },
     // section_4
@@ -296,6 +301,8 @@
           // 캔버스보다 브라우저 창이 납작
           canvasRatio = widthRatio;
         }
+        console.log(canvasRatio);
+
         // canvas 크기 조절 및 img 그리기
         obj.canvas.style.transform = `scale(${canvasRatio})`;
         obj.context.drawImage(obj.images[0], 0, 0, 1920, 1080);
@@ -325,14 +332,6 @@
         values.rect_right_X[1] = values.rect_right_X[0] + whiteRectWidth; // 끝점
 
         obj.context.fillStyle = "white";
-        // 좌 우 흰박스 그리기
-        // obj.context.fillRect(values.rect_left_X[0], 0, parseInt(whiteRectWidth), obj.canvas.height);
-        // obj.context.fillRect(
-        //   values.rect_right_X[0],
-        //   0,
-        //   parseInt(whiteRectWidth),
-        //   obj.canvas.height
-        // );
         // 좌 우 흰박스 그리기 애니메이션
         obj.context.fillRect(
           parseInt(calcValue(values.rect_left_X, currentYoffset)),
@@ -346,6 +345,48 @@
           parseInt(whiteRectWidth),
           obj.canvas.height
         );
+
+        // scrollRatio: 현재 섹션에서 스크롤 위치 비율
+        // blend_canvas가 상단에 닿지 않았을 때는 fixed x
+        if (scrollRatio < values.rect_left_X[2].end) {
+          obj.canvas.classList.remove("fixed");
+        } else {
+          // 상단에 닿았을 경우 fixed
+          obj.canvas.classList.add("fixed");
+          // canvas의 스케일을 조절했기 때문에 줄어든 높이만큼 top 설정
+          obj.canvas.style.top = `-${(obj.canvas.height - obj.canvas.height * canvasRatio) / 2}px`;
+
+          // 두 번째 이미지(blend_image)그리기
+          values.imageBlendPoint[0] = 0; // 시작: 0px
+          values.imageBlendPoint[1] = obj.canvas.height; // 끝: canvas의 높이
+          values.imageBlendPoint[2].start = values.rect_left_X[2].end; // 애니메이션 시작 점 = 첫번째 이미지가 fixed 될 때
+          values.imageBlendPoint[2].end = values.imageBlendPoint[2].start + 0.2;
+          // 그려지는 img 높이
+          let imageBlendHeight = calcValue(values.imageBlendPoint, currentYoffset);
+          console.log(imageBlendHeight);
+          obj.context.drawImage(
+            obj.images[1],
+            0, // sx
+            obj.canvas.height - imageBlendHeight, // sy
+            obj.canvas.width, // sWdith
+            imageBlendHeight, // sHeight
+            0, // dx
+            obj.canvas.height - imageBlendHeight, // dy
+            obj.canvas.width, // dWidth
+            imageBlendHeight // dHeight
+          );
+        }
+
+        // canvas 축소
+        if (scrollRatio > values.imageBlendPoint[2].end && scrollRatio > 0.2) {
+          values.canvas_scale[0] = canvasRatio; // 시작점
+          values.canvas_scale[1] = document.body.offsetWidth / (1.5 * obj.canvas.width);
+
+          values.canvas_scale[2].start = values.imageBlendPoint[2].end;
+          values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2;
+
+          obj.canvas.style.transform = `scale(${calcValue(values.canvas_scale, currentYoffset)})`;
+        }
 
         obj.message1.style.opacity = calcValue(values.message1_opacity, currentYoffset);
         obj.message3.style.opacity = calcValue(values.message3_opacity, currentYoffset);

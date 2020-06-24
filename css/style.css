@@ -499,14 +499,14 @@ body.open_menu {
 /* section_3 canvas text */
 .canvas_large_text {
   font-size: 48px;
-  color: green;
+  color: #fff;
   font-weight: 600;
 }
 .canvas_small_text {
   font-size: 21px;
   font-weight: 600;
   /* color: #fff; */
-  color: green;
+  color: #fff;
   margin-top: 20px;
 }
 .scroll_section {
@@ -613,6 +613,11 @@ body.open_menu {
 }
 
 #scroll_section_3 .image_blend_canvas {
+}
+
+#scroll_section_3 .image_blend_canvas.fixed {
+  position: fixed;
+  /* top 속성은 script로 설정 */
 }
 
 #scroll_section_3 .main_message1 {
