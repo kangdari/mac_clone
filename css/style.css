@@ -17,6 +17,7 @@ html {
 body {
   min-width: 320px;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 body.gn_noScroll {
@@ -28,7 +29,8 @@ body.open_menu {
 }
 
 #container {
-  position: relative;
+  /* position: relative; */
+  overflow-x: visible;
 }
 
 /* global_nav */
@@ -423,6 +425,9 @@ body.open_menu {
 #show_section_3 #scroll_section_3 .sticky_element,
 #show_section_4 #scroll_section_4 .sticky_element {
   display: block;
+}
+#show_section_2 #container {
+  overflow: hidden;
 }
 .sticky_element_canvas {
   position: relative;

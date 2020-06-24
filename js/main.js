@@ -61,7 +61,7 @@
     // section_3
     {
       type: "sticky",
-      heightNum: 4,
+      heightNum: 5,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_3"),
@@ -82,6 +82,7 @@
         // 화면 크기에 따라 값이 변하기때문에 스크롤 이벤트 발생 시 값 설정
         rect_left_X: [0, 0, { start: 0, end: 0 }],
         rect_right_X: [0, 0, { start: 0, end: 0 }],
+        rectStartY: 0, // blend_canvas 애니메이션 시작점 설정
       },
     },
     // section_4
@@ -239,25 +240,37 @@
         // 브라우저 크기에 맞춰 캔버스 크기를 조절하기 위해서 width, height 비율 계산
         const widthRatio = window.innerWidth / obj.canvas.width;
         const heightRatio = window.innerHeight / obj.canvas.height;
-        console.log(widthRatio, heightRatio);
         // canvas에 적용할 비율
         let canvasRatio;
 
         if (widthRatio <= heightRatio) {
-          // 캔버스보다 브라우저 창이 납작
+          // 캔버스보다 브라우저 창이 홀쭉
           canvasRatio = heightRatio;
         } else {
-          // 캔버스보다 브라우저 창이 홀쭉
+          // 캔버스보다 브라우저 창이 납작
           canvasRatio = widthRatio;
         }
-        console.log(canvasRatio);
         // canvas 크기 조절 및 img 그리기
         obj.canvas.style.transform = `scale(${canvasRatio})`;
         obj.context.drawImage(obj.images[0], 0, 0, 1920, 1080);
 
         // 컨버스 크기에 맞춰 가정한 innerWidth, innerHeight
-        const recalculatedInnerWidth = window.innerWidth / canvasRatio;
-        const recalculatedInnerHeight = window.innerHeight / canvasRatio;
+        // document.body.offsetWidth: 스크롤 너비를 제외한 화면 넓이
+        const recalculatedInnerWidth = document.body.offsetWidth / canvasRatio;
+        // const recalculatedInnerHeight = window.innerHeight / canvasRatio;
+        // 값이 없을 때만 실행됨
+        if (!values.rectStartY) {
+          // getBoundingClientRect()은 스크롤의 속도에 따라 리턴값이 다름.
+          // values.rectStartY = obj.canvas.getBoundingClientRect().top;
+          // offsetTop: 부모를 기준으로 한 요소의 위치 값
+          values.rectStartY =
+            obj.canvas.offsetTop + (obj.canvas.height - obj.canvas.height * canvasRatio) / 2;
+          // blend_canvas 애니메이셔 시작, 끝 비율 설정
+          values.rect_left_X[2].start = window.innerHeight / 5 / scrollHeight;
+          values.rect_right_X[2].start = window.innerHeight / 5 / scrollHeight;
+          values.rect_left_X[2].end = values.rectStartY / scrollHeight;
+          values.rect_right_X[2].end = values.rectStartY / scrollHeight;
+        }
 
         const whiteRectWidth = recalculatedInnerWidth * 0.15;
         values.rect_left_X[0] = (obj.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰박스 시작점
@@ -267,9 +280,22 @@
 
         obj.context.fillStyle = "white";
         // 좌 우 흰박스 그리기
-        obj.context.fillRect(values.rect_left_X[0], 0, parseInt(whiteRectWidth), obj.canvas.height);
+        // obj.context.fillRect(values.rect_left_X[0], 0, parseInt(whiteRectWidth), obj.canvas.height);
+        // obj.context.fillRect(
+        //   values.rect_right_X[0],
+        //   0,
+        //   parseInt(whiteRectWidth),
+        //   obj.canvas.height
+        // );
+        // 좌 우 흰박스 그리기 애니메이션
         obj.context.fillRect(
-          values.rect_right_X[0],
+          parseInt(calcValue(values.rect_left_X, currentYoffset)),
+          0,
+          parseInt(whiteRectWidth),
+          obj.canvas.height
+        );
+        obj.context.fillRect(
+          parseInt(calcValue(values.rect_right_X, currentYoffset)),
           0,
           parseInt(whiteRectWidth),
           obj.canvas.height
