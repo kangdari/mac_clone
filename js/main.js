@@ -32,7 +32,7 @@
     // section_2
     {
       type: "normal",
-      heightNum: 1.2,
+      heightNum: 1.5,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_2"),
@@ -266,6 +266,8 @@
             // 캔버스보다 브라우저 창이 납작
             canvasRatio = widthRatio;
           }
+
+          console.log(canvasRatio);
           // canvas 크기 조절 및 img 그리기
           obj.canvas.style.transform = `scale(${canvasRatio})`;
           obj.context.drawImage(obj.images[0], 0, 0, 1920, 1080);
@@ -330,8 +332,8 @@
           values.rectStartY =
             obj.canvas.offsetTop + (obj.canvas.height - obj.canvas.height * canvasRatio) / 2;
           // blend_canvas 애니메이셔 시작, 끝 비율 설정
-          values.rect_left_X[2].start = window.innerHeight / 5 / scrollHeight;
-          values.rect_right_X[2].start = window.innerHeight / 5 / scrollHeight;
+          values.rect_left_X[2].start = window.innerHeight / 3 / scrollHeight;
+          values.rect_right_X[2].start = window.innerHeight / 3 / scrollHeight;
           values.rect_left_X[2].end = values.rectStartY / scrollHeight;
           values.rect_right_X[2].end = values.rectStartY / scrollHeight;
         }
@@ -465,6 +467,9 @@
   // window.addEventListener("load", setLayout);
   window.addEventListener("load", () => {
     setLayout();
+
+    sectionInfo[0].obj.context.drawImage(sectionInfo[0].obj.videoImages[0], 0, 0);
+
     // 문서 첫 로드시 transition 이벤트
     const obj = sectionInfo[0].obj;
     obj.small_text.style.opacity = "1";

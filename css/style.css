@@ -618,6 +618,10 @@ body.open_menu {
   align-items: center;
 }
 
+#scroll_section_3.scroll_section {
+  padding-top: 40vh;
+}
+
 #scroll_section_3 .section_content h1 {
   color: var(--grey--color);
 }
