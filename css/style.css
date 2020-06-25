@@ -29,8 +29,8 @@ body.open_menu {
 }
 
 #container {
-  /* position: relative; */
-  overflow-x: visible;
+  position: relative;
+  overflow-x: hidden;
 }
 
 /* global_nav */
@@ -420,30 +420,27 @@ body.open_menu {
   right: 0;
   width: 100%;
 }
+
 /* 현재 활성화 씬에서만 .sticky_element 요소가 보임 */
 #show_section_1 #scroll_section_1 .sticky_element,
 #show_section_3 #scroll_section_3 .sticky_element,
 #show_section_4 #scroll_section_4 .sticky_element {
   display: block;
 }
+
+#show_section_3 #sroll_section_3 .stikcy {
+  display: block;
+}
 #show_section_2 #container {
   overflow: hidden;
 }
 .sticky_element_canvas {
+  /* position: fixed; */
+
   position: relative;
   width: 100%;
   height: auto;
   z-index: -1;
-  top: 0;
-  margin-top: 10px;
-  margin-bottom: 50px;
-}
-
-.sticky_element_canvas canvas {
-  position: relative;
-  top: 10px;
-  width: 90%;
-  left: 50%;
 }
 
 .main_message {
@@ -511,7 +508,7 @@ body.open_menu {
 }
 .scroll_section {
   position: relative;
-  /* border: 2px solid green; */
+  border: 2px solid green;
   word-break: keep-all;
   padding-top: 35vh;
 }
@@ -528,17 +525,10 @@ body.open_menu {
   padding: 0;
 }
 
-#scroll_section_1 .sticky_container {
-  position: sticky;
-  padding-top: 124px;
-  top: 0;
-}
-
 /* 위치 조정 */
 #scroll_section_1 .main_message1 {
   position: absolute;
   z-index: 10;
-  top: 15%;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -552,10 +542,30 @@ body.open_menu {
 }
 
 #scroll_section_1 .main_message2 {
-  margin-top: 50px;
   opacity: 0;
   transform: translateY(10%);
-  transition: all 1.5s ease;
+  transition: transform 1.5s ease, opacity 1.5s ease;
+  margin-top: 50px;
+}
+
+#scroll_section_1 .canvas_container {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  padding-top: 150px;
+}
+
+#scroll_section_1 .canvas_container.fixed {
+  position: fixed;
+}
+
+#scroll_section_1 .canvas_container canvas {
+  position: relative;
+  left: 50%;
+  width: 80%;
+  margin-top: 50px;
 }
 
 /* section 2 */
@@ -757,6 +767,9 @@ body.open_menu {
   /* section_2 */
   .features_text {
     font-size: 24px;
+  }
+  #scroll_section_1 .canvas_container canvas {
+    width: 60%;
   }
 
   #scroll_section_2 .contents_container {

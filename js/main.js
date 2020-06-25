@@ -32,7 +32,7 @@
     // section_2
     {
       type: "normal",
-      heightNum: 1.04,
+      heightNum: 1.2,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_2"),
@@ -204,6 +204,18 @@
           // canvas에 그리기
           obj.context.drawImage(obj.videoImages[sequence], 0, 0);
         }
+        // section_1 canvas 고정
+        if (scrollRatio > values.imgSequence[2].end) {
+          document.querySelector("#scroll_section_1 .canvas_container").classList.remove("fixed");
+          document.querySelector("#scroll_section_1 .canvas_container").style.marginTop = `${
+            scrollHeight * 0.5
+          }px`;
+        } else {
+          document.querySelector("#scroll_section_1 .canvas_container").style.marginTop = 0;
+
+          document.querySelector("#scroll_section_1 .canvas_container").classList.add("fixed");
+        }
+
         break;
       case 1:
         // section_2
@@ -301,7 +313,6 @@
           // 캔버스보다 브라우저 창이 납작
           canvasRatio = widthRatio;
         }
-        console.log(canvasRatio);
 
         // canvas 크기 조절 및 img 그리기
         obj.canvas.style.transform = `scale(${canvasRatio})`;
@@ -363,7 +374,6 @@
           values.imageBlendPoint[2].end = values.imageBlendPoint[2].start + 0.2;
           // 그려지는 img 높이
           let imageBlendHeight = calcValue(values.imageBlendPoint, currentYoffset);
-          console.log(imageBlendHeight);
           obj.context.drawImage(
             obj.images[1],
             0, // sx

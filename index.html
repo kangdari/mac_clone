@@ -129,8 +129,7 @@
       <div class="back"></div>
       <main>
         <section id="scroll_section_1" class="scroll_section">
-          <div class="sticky_container">
-            <!-- stick_element 스크롤될 때 붙어있는 느낌으로 스타일링 ㄱ -->
+          <div class="canvas_container">
             <div class="main_message1">
               <div class="head_line">
                 <h1 class="section_small_text">MacBook Pro</h1>
@@ -139,11 +138,7 @@
                 </h2>
               </div>
             </div>
-            <!-- canvas -->
-            <!-- video interaction을 위한 canvas 추가 -->
-            <div class="sticky_element_canvas">
-              <canvas id="video_canvas_1" width="1096" height="724"></canvas>
-            </div>
+            <canvas id="video_canvas_1" class="video fixed" width="1096" height="724"></canvas>
             <div class="main_message main_message2 section_content">
               <p class="section_intro_text">
                 주어진 한계를 단호히 거부하고 세상을 바꿔나가는 선구자들. 그들을 위해 탄생한 새로운
@@ -155,7 +150,9 @@
               <p class="video_text">동영상 보기 <i class="xi-play xi-x"></i></p>
             </div>
           </div>
+          <!-- </div> -->
         </section>
+
         <section id="scroll_section_2" class="scroll_section">
           <div class="contents_container">
             <figure class="macbook_img"></figure>
