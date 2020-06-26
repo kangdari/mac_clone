@@ -267,14 +267,16 @@
             canvasRatio = widthRatio;
           }
 
-          console.log(canvasRatio);
           // canvas 크기 조절 및 img 그리기
           obj.canvas.style.transform = `scale(${canvasRatio})`;
-          obj.context.drawImage(obj.images[0], 0, 0, 1920, 1080);
+          obj.context.drawImage(obj.images[0], 0, 0);
+          // obj.context.drawImage(obj.images[0], 0, 0);
 
           // 컨버스 크기에 맞춰 가정한 innerWidth, innerHeight
           // document.body.offsetWidth: 스크롤 너비를 제외한 화면 넓이
           const recalculatedInnerWidth = document.body.offsetWidth / canvasRatio;
+          console.log(recalculatedInnerWidth);
+
           // const recalculatedInnerHeight = window.innerHeight / canvasRatio;
 
           const whiteRectWidth = recalculatedInnerWidth * 0.15;
@@ -305,6 +307,7 @@
         // 브라우저 크기에 맞춰 캔버스 크기를 조절하기 위해서 width, height 비율 계산
         const widthRatio = window.innerWidth / obj.canvas.width;
         const heightRatio = window.innerHeight / obj.canvas.height;
+
         // canvas에 적용할 비율
         let canvasRatio;
 
@@ -318,7 +321,8 @@
 
         // canvas 크기 조절 및 img 그리기
         obj.canvas.style.transform = `scale(${canvasRatio})`;
-        obj.context.drawImage(obj.images[0], 0, 0, 1920, 1080);
+        obj.context.drawImage(obj.images[0], 0, 0);
+        // obj.context.drawImage(obj.images[0], 0, 0);
 
         // 컨버스 크기에 맞춰 가정한 innerWidth, innerHeight
         // document.body.offsetWidth: 스크롤 너비를 제외한 화면 넓이
@@ -332,8 +336,8 @@
           values.rectStartY =
             obj.canvas.offsetTop + (obj.canvas.height - obj.canvas.height * canvasRatio) / 2;
           // blend_canvas 애니메이셔 시작, 끝 비율 설정
-          values.rect_left_X[2].start = window.innerHeight / 3 / scrollHeight;
-          values.rect_right_X[2].start = window.innerHeight / 3 / scrollHeight;
+          values.rect_left_X[2].start = window.innerHeight / 5 / scrollHeight;
+          values.rect_right_X[2].start = window.innerHeight / 5 / scrollHeight;
           values.rect_left_X[2].end = values.rectStartY / scrollHeight;
           values.rect_right_X[2].end = values.rectStartY / scrollHeight;
         }
@@ -392,7 +396,7 @@
         // canvas 축소
         if (scrollRatio > values.imageBlendPoint[2].end && scrollRatio > 0.2) {
           values.canvas_scale[0] = canvasRatio; // 시작점
-          values.canvas_scale[1] = document.body.offsetWidth / (1.5 * obj.canvas.width);
+          values.canvas_scale[1] = document.body.offsetWidth / (1.3 * obj.canvas.width);
 
           values.canvas_scale[2].start = values.imageBlendPoint[2].end;
           values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2;
@@ -467,7 +471,7 @@
   // window.addEventListener("load", setLayout);
   window.addEventListener("load", () => {
     setLayout();
-
+    // 처음 로드될 때 section_1의 canvas 그려주기
     sectionInfo[0].obj.context.drawImage(sectionInfo[0].obj.videoImages[0], 0, 0);
 
     // 문서 첫 로드시 transition 이벤트
