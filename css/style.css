@@ -419,6 +419,7 @@ body.open_menu {
   left: 0;
   right: 0;
   width: 100%;
+  z-index: 10;
 }
 
 /* 현재 활성화 씬에서만 .sticky_element 요소가 보임 */
@@ -436,7 +437,6 @@ body.open_menu {
 }
 .sticky_element_canvas {
   /* position: fixed; */
-
   position: relative;
   width: 100%;
   height: auto;
@@ -635,9 +635,11 @@ body.open_menu {
 }
 
 #scroll_section_3 .main_message1 {
+  opacity: 0;
+  top: 10vh;
+  left: 6vw;
   font-size: 17px;
   max-width: 249px;
-  margin: 0 auto;
 }
 /* canvas_text 컨테이너 너비 */
 #scroll_section_3 .main_message2 {

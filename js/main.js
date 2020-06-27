@@ -25,6 +25,7 @@
       values: {
         videoImgCounts: 122, // img 개수
         imgSequence: [0, 121, { start: 0, end: 0.5 }], // 시작, 끝 인덱스
+        message1_opacity_in: [0, 1, { start: 0, end: 0 }],
         message1_opacity: [1, 0, { start: 0, end: 0.2 }],
         message1_transform: [0, -90, { start: 0, end: 0.2 }],
       },
@@ -74,9 +75,10 @@
         images: [],
       },
       values: {
-        message1_opacity: [0, 1, { start: 0, end: 0.2 }],
-        message2_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
-        message2_opacity_out: [1, 0, { start: 0.65, end: 0.75 }],
+        message1_opacity_in: [0, 1, { start: 0.135, end: 0.23 }],
+        message1_opacity_out: [1, 0, { start: 0.3, end: 0.4 }],
+        message2_opacity_in: [0, 1, { start: 0.45, end: 0.52 }],
+        message2_opacity_out: [1, 0, { start: 0.55, end: 0.62 }],
         message3_opacity: [0, 1, { start: 0.2, end: 0.3 }],
         message3_transform: [10, 0, { start: 0.2, end: 0.3 }],
         // 화면 크기에 따라 값이 변하기때문에 스크롤 이벤트 발생 시 값 설정
@@ -191,13 +193,11 @@
     switch (currentSection) {
       case 0:
         // 스크롤 구간에 따른 분기 처리
-        if (scrollRatio <= 0.25) {
-          obj.message1.style.opacity = calcValue(values.message1_opacity, currentYoffset);
-          obj.message1.style.transform = `translate3d(-50%, ${calcValue(
-            values.message1_transform,
-            currentYoffset
-          )}%, 0)`;
-        }
+        obj.message1.style.opacity = calcValue(values.message1_opacity, currentYoffset);
+        obj.message1.style.transform = `translate3d(-50%, ${calcValue(
+          values.message1_transform,
+          currentYoffset
+        )}%, 0)`;
         if (scrollRatio <= 0.55) {
           // 배열의 인덱스는 정수
           let sequence = Math.round(calcValue(values.imgSequence, currentYoffset));
@@ -275,7 +275,6 @@
           // 컨버스 크기에 맞춰 가정한 innerWidth, innerHeight
           // document.body.offsetWidth: 스크롤 너비를 제외한 화면 넓이
           const recalculatedInnerWidth = document.body.offsetWidth / canvasRatio;
-          console.log(recalculatedInnerWidth);
 
           // const recalculatedInnerHeight = window.innerHeight / canvasRatio;
 
@@ -302,6 +301,12 @@
         }
         break;
       case 2:
+        if (scrollRatio < 0.22) {
+          obj.message1.style.opacity = calcValue(values.message1_opacity_in, currentYoffset);
+        } else {
+          obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
+        }
+
         // section_3
         // blend_canvas
         // 브라우저 크기에 맞춰 캔버스 크기를 조절하기 위해서 width, height 비율 계산
@@ -368,6 +373,7 @@
         if (scrollRatio < values.rect_left_X[2].end) {
           obj.canvas.classList.remove("fixed");
         } else {
+          console.log(scrollRatio);
           // 상단에 닿았을 경우 fixed
           obj.canvas.classList.add("fixed");
           // canvas의 스케일을 조절했기 때문에 줄어든 높이만큼 top 설정
@@ -376,8 +382,8 @@
           // 두 번째 이미지(blend_image)그리기
           values.imageBlendPoint[0] = 0; // 시작: 0px
           values.imageBlendPoint[1] = obj.canvas.height; // 끝: canvas의 높이
-          values.imageBlendPoint[2].start = values.rect_left_X[2].end; // 애니메이션 시작 점 = 첫번째 이미지가 fixed 될 때
-          values.imageBlendPoint[2].end = values.imageBlendPoint[2].start + 0.2;
+          values.imageBlendPoint[2].start = values.rect_left_X[2].end + 0.1; // 애니메이션 시작 점 = 첫번째 이미지가 fixed 될 때
+          values.imageBlendPoint[2].end = values.imageBlendPoint[2].start + 0.3;
           // 그려지는 img 높이
           let imageBlendHeight = calcValue(values.imageBlendPoint, currentYoffset);
           obj.context.drawImage(
@@ -404,13 +410,13 @@
           obj.canvas.style.transform = `scale(${calcValue(values.canvas_scale, currentYoffset)})`;
         }
 
-        obj.message1.style.opacity = calcValue(values.message1_opacity, currentYoffset);
         obj.message3.style.opacity = calcValue(values.message3_opacity, currentYoffset);
         obj.message3.style.transform = `translate3d(0, ${calcValue(
           values.message3_transform,
           currentYoffset
         )}%, 0)`;
-        if (scrollRatio < 0.63) {
+
+        if (scrollRatio < 0.54) {
           obj.message2.style.opacity = calcValue(values.message2_opacity_in, currentYoffset);
         } else {
           obj.message2.style.opacity = calcValue(values.message2_opacity_out, currentYoffset);
@@ -468,12 +474,11 @@
   });
 
   window.addEventListener("resize", setLayout);
-  // window.addEventListener("load", setLayout);
   window.addEventListener("load", () => {
     setLayout();
+    scrollLoop();
     // 처음 로드될 때 section_1의 canvas 그려주기
     sectionInfo[0].obj.context.drawImage(sectionInfo[0].obj.videoImages[0], 0, 0);
-
     // 문서 첫 로드시 transition 이벤트
     const obj = sectionInfo[0].obj;
     obj.small_text.style.opacity = "1";
