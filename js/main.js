@@ -75,12 +75,12 @@
         images: [],
       },
       values: {
-        message1_opacity_in: [0, 1, { start: 0.135, end: 0.23 }],
-        message1_opacity_out: [1, 0, { start: 0.3, end: 0.4 }],
-        message2_opacity_in: [0, 1, { start: 0.45, end: 0.52 }],
-        message2_opacity_out: [1, 0, { start: 0.55, end: 0.62 }],
-        message3_opacity: [0, 1, { start: 0.2, end: 0.3 }],
-        message3_transform: [10, 0, { start: 0.2, end: 0.3 }],
+        message1_opacity_in: [0, 1, { start: 0.12, end: 0.17 }],
+        message1_opacity_out: [1, 0, { start: 0.21, end: 0.26 }],
+        message2_opacity_in: [0, 1, { start: 0.27, end: 0.32 }],
+        message2_opacity_out: [1, 0, { start: 0.33, end: 0.38 }],
+        message3_opacity: [0, 1, { start: 0, end: 0 }],
+        message3_transform: [20, 0, { start: 0, end: 0 }],
         // 화면 크기에 따라 값이 변하기때문에 스크롤 이벤트 발생 시 값 설정
         rect_left_X: [0, 0, { start: 0, end: 0 }],
         rect_right_X: [0, 0, { start: 0, end: 0 }],
@@ -301,10 +301,15 @@
         }
         break;
       case 2:
-        if (scrollRatio < 0.22) {
+        if (scrollRatio < 0.21) {
           obj.message1.style.opacity = calcValue(values.message1_opacity_in, currentYoffset);
         } else {
           obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
+        }
+        if (scrollRatio < 0.325) {
+          obj.message2.style.opacity = calcValue(values.message2_opacity_in, currentYoffset);
+        } else {
+          obj.message2.style.opacity = calcValue(values.message2_opacity_out, currentYoffset);
         }
 
         // section_3
@@ -373,7 +378,6 @@
         if (scrollRatio < values.rect_left_X[2].end) {
           obj.canvas.classList.remove("fixed");
         } else {
-          console.log(scrollRatio);
           // 상단에 닿았을 경우 fixed
           obj.canvas.classList.add("fixed");
           // canvas의 스케일을 조절했기 때문에 줄어든 높이만큼 top 설정
@@ -382,8 +386,8 @@
           // 두 번째 이미지(blend_image)그리기
           values.imageBlendPoint[0] = 0; // 시작: 0px
           values.imageBlendPoint[1] = obj.canvas.height; // 끝: canvas의 높이
-          values.imageBlendPoint[2].start = values.rect_left_X[2].end + 0.1; // 애니메이션 시작 점 = 첫번째 이미지가 fixed 될 때
-          values.imageBlendPoint[2].end = values.imageBlendPoint[2].start + 0.3;
+          values.imageBlendPoint[2].start = values.rect_left_X[2].end; // 애니메이션 시작 점 = 첫번째 이미지가 fixed 될 때
+          values.imageBlendPoint[2].end = values.imageBlendPoint[2].start + 0.2;
           // 그려지는 img 높이
           let imageBlendHeight = calcValue(values.imageBlendPoint, currentYoffset);
           obj.context.drawImage(
@@ -397,6 +401,7 @@
             obj.canvas.width, // dWidth
             imageBlendHeight // dHeight
           );
+          obj.canvas.style.marginTop = `0px`;
         }
 
         // canvas 축소
@@ -409,18 +414,23 @@
 
           obj.canvas.style.transform = `scale(${calcValue(values.canvas_scale, currentYoffset)})`;
         }
+        // canvas 축소가 끝난 뒤
+        if (scrollRatio > values.canvas_scale[2].end && values.canvas_scale[2].end > 0) {
+          obj.canvas.classList.remove("fixed");
+          // canvas blend 시간(0.2s) + scale 축소 시간(0.2s) 만큼 marginTop 설정
+          obj.canvas.style.marginTop = `${scrollHeight * 0.4}px`;
+        }
 
+        values.message3_opacity[2].start = values.canvas_scale[2].end;
+        values.message3_opacity[2].end = values.message3_opacity[2].start + 0.1;
         obj.message3.style.opacity = calcValue(values.message3_opacity, currentYoffset);
+
+        values.message3_transform[2].start = values.canvas_scale[2].end;
+        values.message3_transform[2].end = values.message3_transform[2].start + 0.1;
         obj.message3.style.transform = `translate3d(0, ${calcValue(
           values.message3_transform,
           currentYoffset
         )}%, 0)`;
-
-        if (scrollRatio < 0.54) {
-          obj.message2.style.opacity = calcValue(values.message2_opacity_in, currentYoffset);
-        } else {
-          obj.message2.style.opacity = calcValue(values.message2_opacity_out, currentYoffset);
-        }
 
         break;
       case 3:

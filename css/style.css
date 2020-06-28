@@ -508,7 +508,7 @@ body.open_menu {
 }
 .scroll_section {
   position: relative;
-  border: 2px solid green;
+  border: 2px solid transparent;
   word-break: keep-all;
   padding-top: 35vh;
 }
