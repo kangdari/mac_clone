@@ -71,7 +71,7 @@
         message3: document.querySelector("#scroll_section_3 .main_message3"),
         canvas: document.querySelector("#scroll_section_3 .image_blend_canvas"),
         context: document.querySelector("#scroll_section_3 .image_blend_canvas").getContext("2d"),
-        imagesPath: ["../image/section_4_img_1.jpg", "../image/section_4_img_2.jpg"],
+        imagesPath: ["../image/section_3_img_1.jpg", "../image/section_3_img_2.jpg"],
         images: [],
       },
       values: {
@@ -97,16 +97,26 @@
     // section_4
     {
       type: "sticky",
-      heightNum: 2,
+      heightNum: 3,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_4"),
         message1: document.querySelector("#scroll_section_4 .main_message1"),
         message2: document.querySelector("#scroll_section_4 .main_message2"),
+        canvas: document.querySelector("#scroll_section_4 .image_blend_canvas"),
+        context: document.querySelector("#scroll_section_4 .image_blend_canvas").getContext("2d"),
+        imagesPath: ["../image/section_4_img_1.jpg", "../image/section_4_img_2.png"],
+        images: [],
       },
       values: {
         message1_opacity: [0, 1, { start: 0.1, end: 0.2 }],
         message2_opacity: [0, 1, { start: 0.1, end: 0.2 }],
+        // script로 값 설정
+        rect_left_X: [0, 0, { start: 0, end: 0 }],
+        rect_right_X: [0, 0, { start: 0, end: 0 }],
+        rectStartY: 0,
+        imageBlendPoint: [0, 0, { start: 0, end: 0 }],
+        canvas_scale: [0, 0, { start: 0, end: 0 }],
       },
     },
   ];
@@ -126,6 +136,14 @@
       imgElem3 = new Image();
       imgElem3.src = sectionInfo[2].obj.imagesPath[i];
       sectionInfo[2].obj.images.push(imgElem3);
+    }
+
+    // section_4
+    let imgElem4;
+    for (let i = 0; i < sectionInfo[3].obj.imagesPath.length; i++) {
+      imgElem4 = new Image();
+      imgElem4.src = sectionInfo[3].obj.imagesPath[i];
+      sectionInfo[3].obj.images.push(imgElem4);
     }
   };
 
@@ -214,7 +232,6 @@
           }px`;
         } else {
           document.querySelector("#scroll_section_1 .canvas_container").style.marginTop = 0;
-
           document.querySelector("#scroll_section_1 .canvas_container").classList.add("fixed");
         }
 
@@ -303,11 +320,6 @@
         }
         break;
       case 2:
-        // if (scrollRatio < 0.21) {
-        //   obj.message1.style.opacity = calcValue(values.message1_opacity_in, currentYoffset);
-        // } else {
-        //   obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
-        // }
         if (scrollRatio < 0.325) {
           obj.message2.style.opacity = calcValue(values.message2_opacity_in, currentYoffset);
         } else {
@@ -367,6 +379,7 @@
           values.rect_left_X[2].end = values.rectStartY / scrollHeight;
           values.rect_right_X[2].end = values.rectStartY / scrollHeight;
         }
+
         if (scrollRatio <= values.rect_left_X[2].end + 0.07) {
           // messge1이 나타날 때 = 흰 색 박스 애니메이션이 끝날 때
           values.message1_opacity_in[2].start = values.rect_left_X[2].end;
@@ -450,8 +463,80 @@
         break;
       case 3:
         // section_4
-        obj.message1.style.opacity = calcValue(values.message1_opacity, currentYoffset);
-        obj.message2.style.opacity = calcValue(values.message2_opacity, currentYoffset);
+        const section4_widthRatio = window.innerWidth / obj.canvas.width;
+        const section4_heightRatio = window.innerHeight / obj.canvas.height;
+        let section4_canvasRatio;
+        if (section4_widthRatio < section4_heightRatio) {
+          section4_canvasRatio = section4_heightRatio;
+        } else {
+          section4_canvasRatio = section4_widthRatio;
+        }
+
+        const section4_recalculatedInnerWidth = document.body.offsetWidth / section4_canvasRatio;
+
+        obj.canvas.style.transform = `scale(${section4_canvasRatio})`;
+        obj.context.drawImage(obj.images[0], 0, 0);
+
+        if (!values.rectStartY) {
+          values.rectStartY =
+            obj.canvas.offsetTop +
+            (obj.canvas.height - obj.canvas.height * section4_canvasRatio) / 2;
+
+          values.rect_left_X[2].start = window.innerHeight / 3 / scrollHeight;
+          values.rect_right_X[2].start = window.innerHeight / 3 / scrollHeight;
+          values.rect_left_X[2].end = values.rectStartY / scrollHeight;
+          values.rect_right_X[2].end = values.rectStartY / scrollHeight;
+        }
+
+        // 양쪽 흰 박스
+        const section4_whiteRectWidth = section4_recalculatedInnerWidth * 0.15;
+        values.rect_left_X[0] = (obj.canvas.width - section4_recalculatedInnerWidth) / 2;
+        values.rect_left_X[1] = values.rect_left_X[0] - section4_whiteRectWidth;
+        values.rect_right_X[0] =
+          values.rect_left_X[0] + section4_recalculatedInnerWidth - section4_whiteRectWidth;
+        values.rect_right_X[1] = values.rect_right_X[0] + section4_whiteRectWidth;
+
+        // 흰 박스 애니메이션
+        obj.context.fillStyle = "white";
+        obj.context.fillRect(
+          parseInt(calcValue(values.rect_left_X, currentYoffset)),
+          0,
+          parseInt(section4_whiteRectWidth),
+          obj.canvas.height
+        );
+        obj.context.fillRect(
+          parseInt(calcValue(values.rect_right_X, currentYoffset)),
+          0,
+          parseInt(section4_whiteRectWidth),
+          obj.canvas.height
+        );
+
+        // canvas가 상단에 닿기 전
+        if (scrollRatio < values.rect_left_X[2].end) {
+          obj.canvas.classList.remove("fixed");
+        } else {
+          // canvas가 상단에 닿으면 고정
+          obj.canvas.classList.add("fixed");
+          // 줄어든 canvas의 높이/2 만큼 top 설정
+          obj.canvas.style.top = `-${
+            (obj.canvas.height - obj.canvas.height * section4_canvasRatio) / 2
+          }px`;
+        }
+
+        // 흰 박스 그리기
+        // obj.context.fillRect(
+        //   values.rect_left_X[0],
+        //   0,
+        //   parseInt(section4_whiteRectWidth),
+        //   obj.canvas.height
+        // );
+        // obj.context.fillRect(
+        //   values.rect_right_X[0],
+        //   0,
+        //   parseInt(section4_whiteRectWidth),
+        //   obj.canvas.height
+        // );
+
         break;
     }
   };

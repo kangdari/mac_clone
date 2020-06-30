@@ -631,7 +631,6 @@ body.open_menu {
 }
 
 #scroll_section_3 .image_blend_canvas {
-  /* margin-top: 20px; */
 }
 
 #scroll_section_3 .image_blend_canvas.fixed {
@@ -659,6 +658,22 @@ body.open_menu {
 }
 
 /* section 4 */
+#scroll_section_4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#scroll_section_4 .image_blend_canvas.fixed {
+  position: fixed;
+  top: 0;
+  /* top 속성은 script로 설정 */
+}
+
+#scroll_section_4 .section_content {
+  margin-bottom: 20px;
+}
+
 #scroll_section_4 .section_content h1 {
   color: var(--grey--color);
 }
