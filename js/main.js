@@ -105,7 +105,7 @@
         message2: document.querySelector("#scroll_section_4 .main_message2"),
         canvas: document.querySelector("#scroll_section_4 .image_blend_canvas"),
         context: document.querySelector("#scroll_section_4 .image_blend_canvas").getContext("2d"),
-        imagesPath: ["../image/section_4_img_1.jpg", "../image/section_4_img_2.png"],
+        imagesPath: ["../image/section_4_img_1.jpg", "../image/section_3_img_2.jpg"],
         images: [],
       },
       values: {
@@ -429,6 +429,7 @@
           values.imageBlendPoint[2].end = values.imageBlendPoint[2].start + 0.2;
           // 그려지는 img 높이
           let imageBlendHeight = calcValue(values.imageBlendPoint, currentYoffset);
+          // console.log(obj.canvas.height - imageBlendHeight);
           obj.context.drawImage(
             obj.images[1],
             0, // sx
@@ -458,6 +459,48 @@
           obj.canvas.classList.remove("fixed");
           // canvas blend 시간(0.2s) + scale 축소 시간(0.2s) 만큼 marginTop 설정
           obj.canvas.style.marginTop = `${scrollHeight * 0.4}px`;
+        }
+
+        // section4의 canvas 미리 그리기
+        if (scrollRatio > 0.7) {
+          const obj = sectionInfo[3].obj;
+          const values = sectionInfo[3].values;
+          const section4_widthRatio = window.innerWidth / obj.canvas.width;
+          const section4_heightRatio = window.innerHeight / obj.canvas.height;
+          let section4_canvasRatio;
+          if (section4_widthRatio < section4_heightRatio) {
+            section4_canvasRatio = section4_heightRatio;
+          } else {
+            section4_canvasRatio = section4_widthRatio;
+          }
+
+          const section4_recalculatedInnerWidth = document.body.offsetWidth / section4_canvasRatio;
+
+          obj.canvas.style.transform = `scale(${section4_canvasRatio})`;
+          obj.context.drawImage(obj.images[0], 0, 0);
+
+          // 양쪽 흰 박스
+          const section4_whiteRectWidth = section4_recalculatedInnerWidth * 0.15;
+          values.rect_left_X[0] = (obj.canvas.width - section4_recalculatedInnerWidth) / 2;
+          values.rect_left_X[1] = values.rect_left_X[0] - section4_whiteRectWidth;
+          values.rect_right_X[0] =
+            values.rect_left_X[0] + section4_recalculatedInnerWidth - section4_whiteRectWidth;
+          values.rect_right_X[1] = values.rect_right_X[0] + section4_whiteRectWidth;
+
+          // 흰 박스 애니메이션
+          obj.context.fillStyle = "white";
+          obj.context.fillRect(
+            values.rect_left_X[0],
+            0,
+            parseInt(section4_whiteRectWidth),
+            obj.canvas.height
+          );
+          obj.context.fillRect(
+            values.rect_right_X[0],
+            0,
+            parseInt(section4_whiteRectWidth),
+            obj.canvas.height
+          );
         }
 
         break;
@@ -521,22 +564,32 @@
           obj.canvas.style.top = `-${
             (obj.canvas.height - obj.canvas.height * section4_canvasRatio) / 2
           }px`;
+
+          // blend_image 그리기
+          values.imageBlendPoint[0] = 0;
+          values.imageBlendPoint[1] = obj.canvas.width;
+          values.imageBlendPoint[2].start = values.rect_left_X[2].end;
+          values.imageBlendPoint[2].end = values.imageBlendPoint[2].start + 0.2;
+
+          let section4_imageBlendWidth = calcValue(values.imageBlendPoint, currentYoffset);
+          obj.context.drawImage(
+            obj.images[1],
+            obj.canvas.width - section4_imageBlendWidth,
+            0,
+            section4_imageBlendWidth,
+            obj.canvas.height,
+            obj.canvas.width - section4_imageBlendWidth,
+            0,
+            section4_imageBlendWidth,
+            obj.canvas.height
+          );
+          obj.canvas.style.marginTop = `0px`;
         }
-
-        // 흰 박스 그리기
-        // obj.context.fillRect(
-        //   values.rect_left_X[0],
-        //   0,
-        //   parseInt(section4_whiteRectWidth),
-        //   obj.canvas.height
-        // );
-        // obj.context.fillRect(
-        //   values.rect_right_X[0],
-        //   0,
-        //   parseInt(section4_whiteRectWidth),
-        //   obj.canvas.height
-        // );
-
+        // blending 끝난 후 canvas 고정 해제
+        if (scrollRatio > values.imageBlendPoint[2].end && values.imageBlendPoint[2].end > 0) {
+          obj.canvas.classList.remove("fixed");
+          obj.canvas.style.marginTop = `${scrollHeight * 0.2}px`;
+        }
         break;
     }
   };
