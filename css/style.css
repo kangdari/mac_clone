@@ -678,12 +678,9 @@ body.open_menu {
   color: var(--grey--color);
 }
 
-/* blend_canvas */
-
-#scroll_section_4 .main_message1 {
+\\ #scroll_section_4 .main_message1 {
   max-width: 270px;
-  margin: 0 auto;
-  position: relative;
+  /* position: relative; */
   line-height: 1.3;
 }
 #scroll_section_4 .main_message1 .canvas_text {
@@ -759,8 +756,13 @@ body.open_menu {
     font-size: 24px;
   }
   /* section_4 */
+  #scroll_section_4 .image_blend_canvas {
+    margin-bottom: 50px;
+  }
+
   #scroll_section_4 .main_message1 {
-    max-width: 500px;
+    max-width: 350px;
+    left: 1vw;
   }
   #scroll_section_4 .main_message1 .canvas_text {
     font-size: 40px;
@@ -829,8 +831,10 @@ body.open_menu {
     font-size: 28px;
   }
   /* section_4 */
+
   #scroll_section_4 .main_message1 {
-    max-width: 670px;
+    max-width: 390px;
+    left: 8vw;
   }
   #scroll_section_4 .main_message1 .canvas_text {
     font-size: 48px;

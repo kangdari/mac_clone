@@ -97,7 +97,7 @@
     // section_4
     {
       type: "sticky",
-      heightNum: 3,
+      heightNum: 4,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_4"),
@@ -105,12 +105,14 @@
         message2: document.querySelector("#scroll_section_4 .main_message2"),
         canvas: document.querySelector("#scroll_section_4 .image_blend_canvas"),
         context: document.querySelector("#scroll_section_4 .image_blend_canvas").getContext("2d"),
-        imagesPath: ["../image/section_4_img_1.jpg", "../image/section_3_img_2.jpg"],
+        imagesPath: ["../image/section_4_img_1.jpg", "../image/section_4_img_2.jpg"],
         images: [],
       },
       values: {
-        message1_opacity: [0, 1, { start: 0.1, end: 0.2 }],
-        message2_opacity: [0, 1, { start: 0.1, end: 0.2 }],
+        message1_opacity_in: [0, 1, { start: 0, end: 0 }],
+        message1_opacity_out: [1, 0, { start: 0, end: 0 }],
+        message2_opacity_in: [0, 1, { start: 0, end: 0 }],
+        message2_transform: [20, 0, { start: 0, end: 0 }],
         // script로 값 설정
         rect_left_X: [0, 0, { start: 0, end: 0 }],
         rect_right_X: [0, 0, { start: 0, end: 0 }],
@@ -569,7 +571,7 @@
           values.imageBlendPoint[0] = 0;
           values.imageBlendPoint[1] = obj.canvas.width;
           values.imageBlendPoint[2].start = values.rect_left_X[2].end;
-          values.imageBlendPoint[2].end = values.imageBlendPoint[2].start + 0.2;
+          values.imageBlendPoint[2].end = values.imageBlendPoint[2].start + 0.4;
 
           let section4_imageBlendWidth = calcValue(values.imageBlendPoint, currentYoffset);
           obj.context.drawImage(
@@ -588,7 +590,31 @@
         // blending 끝난 후 canvas 고정 해제
         if (scrollRatio > values.imageBlendPoint[2].end && values.imageBlendPoint[2].end > 0) {
           obj.canvas.classList.remove("fixed");
-          obj.canvas.style.marginTop = `${scrollHeight * 0.2}px`;
+          obj.canvas.style.marginTop = `${scrollHeight * 0.4}px`;
+        }
+
+        // section4 message1 value option 설정
+        if (scrollRatio < values.rect_left_X[2].end + 0.15) {
+          values.message1_opacity_in[2].start = values.rect_left_X[2].end;
+          values.message1_opacity_in[2].end = values.message1_opacity_in[2].start + 0.1;
+          obj.message1.style.opacity = calcValue(values.message1_opacity_in, currentYoffset);
+        } else {
+          values.message1_opacity_out[2].start = values.message1_opacity_in[2].end + 0.05;
+          values.message1_opacity_out[2].end = values.message1_opacity_out[2].start + 0.1;
+          obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
+        }
+        // section4 message2 value option 설정
+        if (scrollRatio > values.imageBlendPoint[2].end && values.imageBlendPoint[2].end > 0) {
+          values.message2_opacity_in[2].start = values.imageBlendPoint[2].end + 0.05;
+          values.message2_opacity_in[2].end = values.message2_opacity_in[2].start + 0.1;
+          obj.message2.style.opacity = calcValue(values.message2_opacity_in, currentYoffset);
+
+          values.message2_transform[2].start = values.imageBlendPoint[2].end + 0.05;
+          values.message2_transform[2].end = values.message2_opacity_in[2].start + 0.1;
+          obj.message2.style.transform = `translate3d(0, ${calcValue(
+            values.message2_transform,
+            currentYoffset
+          )}%, 0)`;
         }
         break;
     }
