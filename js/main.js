@@ -62,7 +62,7 @@
     // section_3
     {
       type: "sticky",
-      heightNum: 5,
+      heightNum: 4,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_3"),
@@ -75,12 +75,14 @@
         images: [],
       },
       values: {
-        message1_opacity_in: [0, 1, { start: 0.12, end: 0.17 }],
-        message1_opacity_out: [1, 0, { start: 0.21, end: 0.26 }],
+        // message1_opacity_in: [0, 1, { start: 0.12, end: 0.17 }],
+        // message1_opacity_out: [1, 0, { start: 0.21, end: 0.26 }],
+        message1_opacity_in: [0, 1, { start: 0, end: 0 }],
+        message1_opacity_out: [1, 0, { start: 0, end: 0 }],
         message2_opacity_in: [0, 1, { start: 0.27, end: 0.32 }],
         message2_opacity_out: [1, 0, { start: 0.33, end: 0.38 }],
         message3_opacity: [0, 1, { start: 0, end: 0 }],
-        message3_transform: [20, 0, { start: 0, end: 0 }],
+        message3_transform: [40, 0, { start: 0, end: 0 }],
         // 화면 크기에 따라 값이 변하기때문에 스크롤 이벤트 발생 시 값 설정
         rect_left_X: [0, 0, { start: 0, end: 0 }],
         rect_right_X: [0, 0, { start: 0, end: 0 }],
@@ -301,15 +303,29 @@
         }
         break;
       case 2:
-        if (scrollRatio < 0.21) {
-          obj.message1.style.opacity = calcValue(values.message1_opacity_in, currentYoffset);
-        } else {
-          obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
-        }
+        // if (scrollRatio < 0.21) {
+        //   obj.message1.style.opacity = calcValue(values.message1_opacity_in, currentYoffset);
+        // } else {
+        //   obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
+        // }
         if (scrollRatio < 0.325) {
           obj.message2.style.opacity = calcValue(values.message2_opacity_in, currentYoffset);
         } else {
           obj.message2.style.opacity = calcValue(values.message2_opacity_out, currentYoffset);
+        }
+        if (scrollRatio > 0.55) {
+          values.message3_opacity[2].start = values.canvas_scale[2].end;
+          values.message3_opacity[2].end = values.message3_opacity[2].start + 0.1;
+          obj.message3.style.opacity = calcValue(values.message3_opacity, currentYoffset);
+
+          values.message3_transform[2].start = values.canvas_scale[2].end;
+          values.message3_transform[2].end = values.message3_transform[2].start + 0.1;
+          obj.message3.style.transform = `translate3d(0, ${calcValue(
+            values.message3_transform,
+            currentYoffset
+          )}%, 0)`;
+        } else {
+          obj.message3.style.opacity = "0";
         }
 
         // section_3
@@ -350,6 +366,16 @@
           values.rect_right_X[2].start = window.innerHeight / 5 / scrollHeight;
           values.rect_left_X[2].end = values.rectStartY / scrollHeight;
           values.rect_right_X[2].end = values.rectStartY / scrollHeight;
+        }
+        if (scrollRatio <= values.rect_left_X[2].end + 0.07) {
+          // messge1이 나타날 때 = 흰 색 박스 애니메이션이 끝날 때
+          values.message1_opacity_in[2].start = values.rect_left_X[2].end;
+          values.message1_opacity_in[2].end = values.message1_opacity_in[2].start + 0.05;
+          obj.message1.style.opacity = calcValue(values.message1_opacity_in, currentYoffset);
+        } else {
+          values.message1_opacity_out[2].start = values.message1_opacity_in[2].end + 0.03;
+          values.message1_opacity_out[2].end = values.message1_opacity_out[2].start + 0.05;
+          obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
         }
 
         const whiteRectWidth = recalculatedInnerWidth * 0.15;
@@ -420,17 +446,6 @@
           // canvas blend 시간(0.2s) + scale 축소 시간(0.2s) 만큼 marginTop 설정
           obj.canvas.style.marginTop = `${scrollHeight * 0.4}px`;
         }
-
-        values.message3_opacity[2].start = values.canvas_scale[2].end;
-        values.message3_opacity[2].end = values.message3_opacity[2].start + 0.1;
-        obj.message3.style.opacity = calcValue(values.message3_opacity, currentYoffset);
-
-        values.message3_transform[2].start = values.canvas_scale[2].end;
-        values.message3_transform[2].end = values.message3_transform[2].start + 0.1;
-        obj.message3.style.transform = `translate3d(0, ${calcValue(
-          values.message3_transform,
-          currentYoffset
-        )}%, 0)`;
 
         break;
       case 3:

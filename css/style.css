@@ -622,11 +622,16 @@ body.open_menu {
   padding-top: 40vh;
 }
 
+#scroll_section_3 .section_content {
+  margin-bottom: 20px;
+}
+
 #scroll_section_3 .section_content h1 {
   color: var(--grey--color);
 }
 
 #scroll_section_3 .image_blend_canvas {
+  /* margin-top: 20px; */
 }
 
 #scroll_section_3 .image_blend_canvas.fixed {
@@ -647,6 +652,10 @@ body.open_menu {
   margin: 0 auto;
   text-align: center;
   white-space: normal;
+}
+
+#scroll_section_3 .main_message3 {
+  opacity: 0;
 }
 
 /* section 4 */
