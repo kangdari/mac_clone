@@ -7,6 +7,11 @@
   --nav--border--color: #424245;
   --grey--color: #8e8e8e;
   --border--color: #e5e5e5;
+
+  /*  */
+  --img--gap--mobile: 36px;
+  --img--gap--tablet: 50px;
+  --img--gap--desktop: 65px;
 }
 
 html {
@@ -659,6 +664,110 @@ body.open_menu {
   margin-top: -300px;
 }
 
+/* section_3 gallery */
+#scroll_section_3 .gallery {
+  padding-top: 80px;
+}
+
+#scroll_section_3 .gallery_screen_container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #f3f3f3;
+}
+/* 모바일에서  */
+#scroll_section_3 .gallery_screen_container .images_container {
+  position: relative;
+  width: 256px;
+  height: 255px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 10;
+}
+/* #scroll_section_3 .gallery_screen_container .gallery_background {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 255px;
+  background-color: #f3f3f3;
+} */
+
+/* 이미지 */
+#scroll_section_3 .gallery_screen_container .image {
+  width: 124px;
+  height: 255px;
+  background-size: 124px 255px;
+  background-repeat: no-repeat;
+  position: absolute;
+  min-height: 100%;
+  top: 0;
+}
+#scroll_section_3 .gallery_screen_container .image:not(.image_0) {
+  margin-left: 4px;
+}
+#scroll_section_3 .gallery_screen_container .image:not(.current) {
+  opacity: 0.4;
+}
+/* current image의 다음 형제 image들은 안보이도록 설정 */
+#scroll_section_3 .gallery_screen_container .image.current ~ .image {
+  opacity: 0;
+}
+
+#scroll_section_3 .gallery_screen_container .image_0 {
+  background-image: url(/image/section3_gallery/small_1.png);
+}
+#scroll_section_3 .gallery_screen_container .image_1 {
+  background-image: url(/image/section3_gallery/small_2.png);
+  left: calc(var(--img--gap--mobile));
+}
+#scroll_section_3 .gallery_screen_container .image_2 {
+  background-image: url(/image/section3_gallery/small_3.png);
+  left: calc(var(--img--gap--mobile) * 2);
+}
+#scroll_section_3 .gallery_screen_container .image_3 {
+  background-image: url(/image/section3_gallery/small_4.png);
+  left: calc(var(--img--gap--mobile) * 3);
+}
+#scroll_section_3 .gallery_screen_container .image_4 {
+  background-image: url(/image/section3_gallery/small_5.png);
+  left: calc(var(--img--gap--mobile) * 4);
+}
+#scroll_section_3 .gallery_screen_container .content_container {
+  background: #fff;
+}
+
+/* 버튼 */
+#scroll_section_3 .gallery_screen_container .content_container .btns {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+#scroll_section_3 .gallery_screen_container .content_container .btns button {
+  font-size: 40px;
+  outline: none;
+  color: #86868b;
+}
+/* 설명 */
+#scroll_section_3 .gallery_screen_container .content_container .gallery_items .item {
+  top: 0;
+  left: 0;
+  color: #86868b;
+}
+/* current 클래스가 없으면 안보이도록 */
+#scroll_section_3 .gallery_screen_container .content_container .gallery_items .item:not(.current) {
+  opacity: 0;
+  position: absolute;
+}
+
+#scroll_section_3 .gallery_screen_container .content_container .gallery_items .item p {
+  font-size: 19px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
 /* section 4 */
 #scroll_section_4 {
   display: flex;
@@ -680,7 +789,7 @@ body.open_menu {
   color: var(--grey--color);
 }
 
-\\ #scroll_section_4 .main_message1 {
+#scroll_section_4 .main_message1 {
   max-width: 270px;
   /* position: relative; */
   line-height: 1.3;
@@ -760,6 +869,38 @@ body.open_menu {
   .canvas_small_text {
     font-size: 24px;
   }
+
+  #scroll_section_3 .gallery_screen_container .images_container {
+    position: relative;
+    width: 424px;
+    height: 424px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #scroll_section_3 .gallery_screen_container .image_1 {
+    left: calc(var(--img--gap--tablet));
+  }
+  #scroll_section_3 .gallery_screen_container .image_2 {
+    left: calc(var(--img--gap--tablet) * 2);
+  }
+  #scroll_section_3 .gallery_screen_container .image_3 {
+    left: calc(var(--img--gap--tablet) * 3);
+  }
+  #scroll_section_3 .gallery_screen_container .image_4 {
+    left: calc(var(--img--gap--tablet) * 4);
+  }
+
+  #scroll_section_3 .gallery_screen_container .image:not(.image_0) {
+    margin-left: 6px;
+  }
+
+  #scroll_section_3 .gallery_screen_container .image {
+    width: 206px;
+    height: 424px;
+    background-size: 206px 424px;
+  }
+
   /* section_4 */
   #scroll_section_4 .image_blend_canvas {
     margin-bottom: 50px;
@@ -839,6 +980,66 @@ body.open_menu {
   .canvas_small_text {
     font-size: 28px;
   }
+
+  #scroll_section_3 .gallery {
+    padding-top: 100px;
+  }
+
+  #scroll_section_3 .gallery_screen_container {
+    flex-direction: row;
+    background: #f3f3f3;
+  }
+
+  #scroll_section_3 .gallery_screen_container .images_container {
+    flex: 1;
+    order: 2;
+    height: 642px;
+    margin-left: 20px;
+  }
+  #scroll_section_3 .gallery_screen_container .image {
+    width: 310px;
+    height: 642px;
+    background-size: 310px 642px;
+  }
+
+  #scroll_section_3 .gallery_screen_container .image:not(.image_0) {
+    margin-left: 10px;
+  }
+
+  #scroll_section_3 .gallery_screen_container .image_1 {
+    background-image: url(/image/section3_gallery/medium_2.png);
+    left: calc(var(--img--gap--desktop));
+  }
+  #scroll_section_3 .gallery_screen_container .image_2 {
+    background-image: url(/image/section3_gallery/medium_3.png);
+    left: calc(var(--img--gap--desktop) * 2);
+  }
+  #scroll_section_3 .gallery_screen_container .image_3 {
+    background-image: url(/image/section3_gallery/medium_4.png);
+    left: calc(var(--img--gap--desktop) * 3);
+  }
+  #scroll_section_3 .gallery_screen_container .image_4 {
+    background-image: url(/image/section3_gallery/medium_5.png);
+    left: calc(var(--img--gap--desktop) * 4);
+  }
+
+  #scroll_section_3 .gallery_screen_container .content_container {
+    flex-basis: 33.333%;
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 150px;
+    padding-left: 30px;
+    padding-right: 10px;
+    background: #f3f3f3;
+  }
+
+  #scroll_section_3 .gallery_screen_container .content_container .btns {
+    position: absolute;
+    bottom: 0;
+  }
+
   /* section_4 */
 
   #scroll_section_4 .main_message1 {
