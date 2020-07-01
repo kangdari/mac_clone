@@ -73,6 +73,14 @@
         context: document.querySelector("#scroll_section_3 .image_blend_canvas").getContext("2d"),
         imagesPath: ["../image/section_3_img_1.jpg", "../image/section_3_img_2.jpg"],
         images: [],
+        // gallery
+        gallery_btn_prev: document.querySelector("#scroll_section_3 .prev"),
+        gallery_btn_next: document.querySelector("#scroll_section_3 .next"),
+        gallery_currrent_index: 4, // count는 1 ~ 3
+        gallery_images: [...document.querySelectorAll("#scroll_section_3 .image")],
+        gallery_items: [...document.querySelectorAll("#scroll_section_3 .item")],
+        gallery_current_image: document.querySelector("#scroll_section_3 .image.current"),
+        gallery_current_item: document.querySelector("#scroll_section_3 .item.current"),
       },
       values: {
         message1_opacity_in: [0, 1, { start: 0, end: 0 }],
@@ -691,4 +699,52 @@
     obj.message2.style.transform = "translateY(0)";
   });
   setCanvasImg();
+
+  sectionInfo[2].obj.gallery_btn_next.addEventListener("click", () => {
+    if (sectionInfo[2].obj.gallery_currrent_index > 1) {
+      sectionInfo[2].obj.gallery_currrent_index--; // 현재 인덱스 -1
+      // 기존 current image 제거 후 다음 image를 current image로 설정
+      sectionInfo[2].obj.gallery_current_image.classList.remove("current");
+      // 현재 이미지 변경
+      sectionInfo[2].obj.gallery_current_image =
+        sectionInfo[2].obj.gallery_images[sectionInfo[2].obj.gallery_currrent_index];
+
+      sectionInfo[2].obj.gallery_current_image.classList.add("current");
+      // item의 경우 요소가 하나 적으므로 index-1
+      sectionInfo[2].obj.gallery_current_item.classList.remove("current");
+      // 현재 아이템 변경
+      sectionInfo[2].obj.gallery_current_item =
+        sectionInfo[2].obj.gallery_items[sectionInfo[2].obj.gallery_currrent_index - 1];
+      sectionInfo[2].obj.gallery_current_item.classList.add("current");
+    }
+    // 현재 index에 따라서 버튼 비활성화
+    if (sectionInfo[2].obj.gallery_currrent_index === 1) {
+      sectionInfo[2].obj.gallery_btn_next.disabled = true;
+    } else {
+      sectionInfo[2].obj.gallery_btn_prev.disabled = false;
+    }
+  });
+
+  sectionInfo[2].obj.gallery_btn_prev.addEventListener("click", () => {
+    if (sectionInfo[2].obj.gallery_currrent_index < 4) {
+      sectionInfo[2].obj.gallery_currrent_index++; // 현재 인덱스 +1
+      // image
+      sectionInfo[2].obj.gallery_current_image.classList.remove("current");
+      sectionInfo[2].obj.gallery_current_image =
+        sectionInfo[2].obj.gallery_images[sectionInfo[2].obj.gallery_currrent_index];
+      sectionInfo[2].obj.gallery_current_image.classList.add("current");
+
+      // item
+      sectionInfo[2].obj.gallery_current_item.classList.remove("current");
+      sectionInfo[2].obj.gallery_current_item =
+        sectionInfo[2].obj.gallery_items[sectionInfo[2].obj.gallery_currrent_index - 1];
+      sectionInfo[2].obj.gallery_current_item.classList.add("current");
+    }
+    // button
+    if (sectionInfo[2].obj.gallery_currrent_index == 4) {
+      sectionInfo[2].obj.gallery_btn_prev.disabled = true;
+    } else {
+      sectionInfo[2].obj.gallery_btn_next.disabled = false;
+    }
+  });
 })();
