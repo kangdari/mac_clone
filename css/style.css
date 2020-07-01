@@ -436,7 +436,6 @@ body.open_menu {
   overflow: hidden;
 }
 .sticky_element_canvas {
-  /* position: fixed; */
   position: relative;
   width: 100%;
   height: auto;
@@ -471,7 +470,8 @@ body.open_menu {
 }
 /* 각 센션 헤드라인 */
 .section_headline_text {
-  font-size: 40px;
+  /* font-size: 40px; */
+  font-size: 37px;
   letter-spacing: 0;
 }
 /* 각 센션 세부 설명 */
@@ -485,6 +485,7 @@ body.open_menu {
 .section_content {
   max-width: 360px;
   margin: 0 auto;
+  width: 87.5%;
 }
 /* 제품 특징 */
 .features_text {
@@ -655,6 +656,7 @@ body.open_menu {
 
 #scroll_section_3 .main_message3 {
   opacity: 0;
+  margin-top: -300px;
 }
 
 /* section 4 */
@@ -749,6 +751,9 @@ body.open_menu {
   #scroll_section_3 .main_message2 {
     max-width: 643px;
   }
+  #scroll_section_3 .main_message3 {
+    margin-top: -200px;
+  }
   .canvas_large_text {
     font-size: 64px;
   }
@@ -824,6 +829,10 @@ body.open_menu {
   #scroll_section_3 .main_message2 {
     max-width: 760px;
   }
+  #scroll_section_3 .main_message3 {
+    margin-top: -100px;
+  }
+
   .canvas_large_text {
     font-size: 80px;
   }

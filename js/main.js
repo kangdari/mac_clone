@@ -62,7 +62,7 @@
     // section_3
     {
       type: "sticky",
-      heightNum: 4,
+      heightNum: 3.5,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_3"),
@@ -75,12 +75,13 @@
         images: [],
       },
       values: {
-        // message1_opacity_in: [0, 1, { start: 0.12, end: 0.17 }],
-        // message1_opacity_out: [1, 0, { start: 0.21, end: 0.26 }],
         message1_opacity_in: [0, 1, { start: 0, end: 0 }],
         message1_opacity_out: [1, 0, { start: 0, end: 0 }],
-        message2_opacity_in: [0, 1, { start: 0.27, end: 0.32 }],
-        message2_opacity_out: [1, 0, { start: 0.33, end: 0.38 }],
+        // message2_opacity_in: [0, 1, { start: 0.27, end: 0.32 }],
+        // message2_opacity_out: [1, 0, { start: 0.33, end: 0.38 }],
+        message2_opacity_in: [0, 1, { start: 0, end: 0 }],
+        message2_opacity_out: [1, 0, { start: 0, end: 0 }],
+
         message3_opacity: [0, 1, { start: 0, end: 0 }],
         message3_transform: [40, 0, { start: 0, end: 0 }],
         // 화면 크기에 따라 값이 변하기때문에 스크롤 이벤트 발생 시 값 설정
@@ -322,11 +323,7 @@
         }
         break;
       case 2:
-        if (scrollRatio < 0.325) {
-          obj.message2.style.opacity = calcValue(values.message2_opacity_in, currentYoffset);
-        } else {
-          obj.message2.style.opacity = calcValue(values.message2_opacity_out, currentYoffset);
-        }
+        // section_3
         if (scrollRatio > 0.55) {
           values.message3_opacity[2].start = values.canvas_scale[2].end;
           values.message3_opacity[2].end = values.message3_opacity[2].start + 0.1;
@@ -342,7 +339,30 @@
           obj.message3.style.opacity = "0";
         }
 
-        // section_3
+        if (scrollRatio <= values.rect_left_X[2].end + 0.07) {
+          // messge1이 나타날 때 = 흰 색 박스 애니메이션이 끝날 때
+          values.message1_opacity_in[2].start = values.rect_left_X[2].end;
+          values.message1_opacity_in[2].end = values.message1_opacity_in[2].start + 0.05;
+          obj.message1.style.opacity = calcValue(values.message1_opacity_in, currentYoffset);
+        } else {
+          values.message1_opacity_out[2].start = values.message1_opacity_in[2].end + 0.03;
+          values.message1_opacity_out[2].end = values.message1_opacity_out[2].start + 0.05;
+          obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
+        }
+
+        // message2 value option 설정
+        if (values.message1_opacity_out[2].end > 0) {
+          if (scrollRatio <= values.message1_opacity_out[2].end + 0.07) {
+            values.message2_opacity_in[2].start = values.message1_opacity_out[2].end;
+            values.message2_opacity_in[2].end = values.message2_opacity_in[2].start + 0.05;
+            obj.message2.style.opacity = calcValue(values.message2_opacity_in, currentYoffset);
+          } else {
+            values.message2_opacity_out[2].start = values.message2_opacity_in[2].end + 0.1;
+            values.message2_opacity_out[2].end = values.message2_opacity_out[2].start + 0.1;
+            obj.message2.style.opacity = calcValue(values.message2_opacity_out, currentYoffset);
+          }
+        }
+
         // blend_canvas
         // 브라우저 크기에 맞춰 캔버스 크기를 조절하기 위해서 width, height 비율 계산
         const widthRatio = window.innerWidth / obj.canvas.width;
@@ -376,21 +396,14 @@
           values.rectStartY =
             obj.canvas.offsetTop + (obj.canvas.height - obj.canvas.height * canvasRatio) / 2;
           // blend_canvas 애니메이셔 시작, 끝 비율 설정
-          values.rect_left_X[2].start = window.innerHeight / 5 / scrollHeight;
-          values.rect_right_X[2].start = window.innerHeight / 5 / scrollHeight;
-          values.rect_left_X[2].end = values.rectStartY / scrollHeight;
-          values.rect_right_X[2].end = values.rectStartY / scrollHeight;
-        }
+          // values.rect_left_X[2].start = window.innerHeight / 5 / scrollHeight;
+          // values.rect_right_X[2].start = window.innerHeight / 5 / scrollHeight;
 
-        if (scrollRatio <= values.rect_left_X[2].end + 0.07) {
-          // messge1이 나타날 때 = 흰 색 박스 애니메이션이 끝날 때
-          values.message1_opacity_in[2].start = values.rect_left_X[2].end;
-          values.message1_opacity_in[2].end = values.message1_opacity_in[2].start + 0.05;
-          obj.message1.style.opacity = calcValue(values.message1_opacity_in, currentYoffset);
-        } else {
-          values.message1_opacity_out[2].start = values.message1_opacity_in[2].end + 0.03;
-          values.message1_opacity_out[2].end = values.message1_opacity_out[2].start + 0.05;
-          obj.message1.style.opacity = calcValue(values.message1_opacity_out, currentYoffset);
+          values.rect_left_X[2].start = window.innerHeight / 3 / scrollHeight;
+          values.rect_right_X[2].start = window.innerHeight / 3 / scrollHeight;
+
+          values.rect_left_X[2].end = values.rectStartY / scrollHeight;
+          values.rect_right_X[2].end = values.rectStartY / scrollHeight; // 0.2015
         }
 
         const whiteRectWidth = recalculatedInnerWidth * 0.15;
@@ -431,7 +444,7 @@
           values.imageBlendPoint[2].end = values.imageBlendPoint[2].start + 0.2;
           // 그려지는 img 높이
           let imageBlendHeight = calcValue(values.imageBlendPoint, currentYoffset);
-          // console.log(obj.canvas.height - imageBlendHeight);
+
           obj.context.drawImage(
             obj.images[1],
             0, // sx
@@ -444,23 +457,23 @@
             imageBlendHeight // dHeight
           );
           obj.canvas.style.marginTop = `0px`;
-        }
 
-        // canvas 축소
-        if (scrollRatio > values.imageBlendPoint[2].end && scrollRatio > 0.2) {
-          values.canvas_scale[0] = canvasRatio; // 시작점
-          values.canvas_scale[1] = document.body.offsetWidth / (1.3 * obj.canvas.width);
+          // canvas 축소
+          if (scrollRatio > values.imageBlendPoint[2].end && scrollRatio > 0.2) {
+            values.canvas_scale[0] = canvasRatio; // 시작점
+            values.canvas_scale[1] = document.body.offsetWidth / (1.3 * obj.canvas.width);
 
-          values.canvas_scale[2].start = values.imageBlendPoint[2].end;
-          values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2;
+            values.canvas_scale[2].start = values.imageBlendPoint[2].end;
+            values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2;
 
-          obj.canvas.style.transform = `scale(${calcValue(values.canvas_scale, currentYoffset)})`;
-        }
-        // canvas 축소가 끝난 뒤
-        if (scrollRatio > values.canvas_scale[2].end && values.canvas_scale[2].end > 0) {
-          obj.canvas.classList.remove("fixed");
-          // canvas blend 시간(0.2s) + scale 축소 시간(0.2s) 만큼 marginTop 설정
-          obj.canvas.style.marginTop = `${scrollHeight * 0.4}px`;
+            obj.canvas.style.transform = `scale(${calcValue(values.canvas_scale, currentYoffset)})`;
+          }
+          // canvas 축소가 끝난 뒤
+          if (scrollRatio > values.canvas_scale[2].end && values.canvas_scale[2].end > 0) {
+            obj.canvas.classList.remove("fixed");
+            // canvas blend 시간(0.2s) + scale 축소 시간(0.2s) 만큼 marginTop 설정
+            obj.canvas.style.marginTop = `${scrollHeight * 0.4}px`;
+          }
         }
 
         // section4의 canvas 미리 그리기
