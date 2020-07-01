@@ -677,6 +677,22 @@
     playAnimation();
   };
 
+  // gallery image, item의 current class 변경 함수
+  const toggleCurrentClass = () => {
+    const obj = sectionInfo[2].obj;
+    // 기존 current image 제거 후 다음 image를 current image로 설정
+    obj.gallery_current_image.classList.remove("current");
+    obj.gallery_current_image = obj.gallery_images[obj.gallery_currrent_index]; // 현재 이미지 변경
+    obj.gallery_current_image.classList.add("current");
+
+    // item의 경우 요소가 하나 적으므로 index-1
+    obj.gallery_current_item.classList.remove("current");
+    obj.gallery_current_item = obj.gallery_items[obj.gallery_currrent_index - 1]; // 현재 아이템 변경
+    setTimeout(() => {
+      obj.gallery_current_item.classList.add("current");
+    }, 200);
+  };
+
   window.addEventListener("scroll", () => {
     yOffset = window.pageYOffset;
     checkMenu();
@@ -697,54 +713,33 @@
     obj.main_text.style.transform = "translateY(0)";
     obj.message2.style.opacity = "1";
     obj.message2.style.transform = "translateY(0)";
+
+    sectionInfo[2].obj.gallery_btn_next.addEventListener("click", () => {
+      const obj = sectionInfo[2].obj;
+      if (obj.gallery_currrent_index > 1) {
+        obj.gallery_currrent_index--; // 현재 인덱스 -1
+        toggleCurrentClass();
+      }
+      // 현재 index에 따라서 버튼 비활성화
+      if (obj.gallery_currrent_index === 1) {
+        obj.gallery_btn_next.disabled = true;
+      } else {
+        obj.gallery_btn_prev.disabled = false;
+      }
+    });
+
+    sectionInfo[2].obj.gallery_btn_prev.addEventListener("click", () => {
+      const obj = sectionInfo[2].obj;
+      if (obj.gallery_currrent_index < 4) {
+        obj.gallery_currrent_index++; // 현재 인덱스 +1
+        toggleCurrentClass();
+      }
+      if (obj.gallery_currrent_index == 4) {
+        obj.gallery_btn_prev.disabled = true;
+      } else {
+        obj.gallery_btn_next.disabled = false;
+      }
+    });
   });
   setCanvasImg();
-
-  sectionInfo[2].obj.gallery_btn_next.addEventListener("click", () => {
-    if (sectionInfo[2].obj.gallery_currrent_index > 1) {
-      sectionInfo[2].obj.gallery_currrent_index--; // 현재 인덱스 -1
-      // 기존 current image 제거 후 다음 image를 current image로 설정
-      sectionInfo[2].obj.gallery_current_image.classList.remove("current");
-      // 현재 이미지 변경
-      sectionInfo[2].obj.gallery_current_image =
-        sectionInfo[2].obj.gallery_images[sectionInfo[2].obj.gallery_currrent_index];
-
-      sectionInfo[2].obj.gallery_current_image.classList.add("current");
-      // item의 경우 요소가 하나 적으므로 index-1
-      sectionInfo[2].obj.gallery_current_item.classList.remove("current");
-      // 현재 아이템 변경
-      sectionInfo[2].obj.gallery_current_item =
-        sectionInfo[2].obj.gallery_items[sectionInfo[2].obj.gallery_currrent_index - 1];
-      sectionInfo[2].obj.gallery_current_item.classList.add("current");
-    }
-    // 현재 index에 따라서 버튼 비활성화
-    if (sectionInfo[2].obj.gallery_currrent_index === 1) {
-      sectionInfo[2].obj.gallery_btn_next.disabled = true;
-    } else {
-      sectionInfo[2].obj.gallery_btn_prev.disabled = false;
-    }
-  });
-
-  sectionInfo[2].obj.gallery_btn_prev.addEventListener("click", () => {
-    if (sectionInfo[2].obj.gallery_currrent_index < 4) {
-      sectionInfo[2].obj.gallery_currrent_index++; // 현재 인덱스 +1
-      // image
-      sectionInfo[2].obj.gallery_current_image.classList.remove("current");
-      sectionInfo[2].obj.gallery_current_image =
-        sectionInfo[2].obj.gallery_images[sectionInfo[2].obj.gallery_currrent_index];
-      sectionInfo[2].obj.gallery_current_image.classList.add("current");
-
-      // item
-      sectionInfo[2].obj.gallery_current_item.classList.remove("current");
-      sectionInfo[2].obj.gallery_current_item =
-        sectionInfo[2].obj.gallery_items[sectionInfo[2].obj.gallery_currrent_index - 1];
-      sectionInfo[2].obj.gallery_current_item.classList.add("current");
-    }
-    // button
-    if (sectionInfo[2].obj.gallery_currrent_index == 4) {
-      sectionInfo[2].obj.gallery_btn_prev.disabled = true;
-    } else {
-      sectionInfo[2].obj.gallery_btn_next.disabled = false;
-    }
-  });
 })();
