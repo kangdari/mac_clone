@@ -74,6 +74,7 @@
         imagesPath: ["../image/section_3_img_1.jpg", "../image/section_3_img_2.jpg"],
         images: [],
         // gallery
+        gallery: document.querySelector("#scroll_section_3 .gallery"),
         gallery_btn_prev: document.querySelector("#scroll_section_3 .prev"),
         gallery_btn_next: document.querySelector("#scroll_section_3 .next"),
         gallery_currrent_index: 4, // count는 1 ~ 3
@@ -85,8 +86,6 @@
       values: {
         message1_opacity_in: [0, 1, { start: 0, end: 0 }],
         message1_opacity_out: [1, 0, { start: 0, end: 0 }],
-        // message2_opacity_in: [0, 1, { start: 0.27, end: 0.32 }],
-        // message2_opacity_out: [1, 0, { start: 0.33, end: 0.38 }],
         message2_opacity_in: [0, 1, { start: 0, end: 0 }],
         message2_opacity_out: [1, 0, { start: 0, end: 0 }],
 
@@ -331,6 +330,11 @@
         }
         break;
       case 2:
+        if (scrollRatio > 0.4) {
+          obj.gallery.style.display = "block";
+        } else {
+          obj.gallery.style.display = "none";
+        }
         // section_3
         if (scrollRatio > 0.55) {
           values.message3_opacity[2].start = values.canvas_scale[2].end;
