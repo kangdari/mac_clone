@@ -129,6 +129,19 @@
         canvas_scale: [0, 0, { start: 0, end: 0 }],
       },
     },
+    // section_5
+    {
+      type: "sticky",
+      heightNum: 3,
+      scrollHeight: 0,
+      obj: {
+        container: document.querySelector("#scroll_section_5"),
+        canvas: document.querySelector("#scroll_section_5 .image_blend_canvas"),
+        context: document.querySelector("#scroll_section_5 .image_blend_canvas").getContext("2d"),
+        video: document.createElement("video"),
+      },
+      value: {},
+    },
   ];
 
   // canvas에 그릴 img 배열 설정
@@ -641,6 +654,9 @@
             currentYoffset
           )}%, 0)`;
         }
+        break;
+      case 4:
+        obj.context.drawImage(sectionInfo[0].obj.videoImages[0], 0, 0);
         break;
     }
   };
