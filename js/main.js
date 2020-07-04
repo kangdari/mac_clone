@@ -132,13 +132,14 @@
     // section_5
     {
       type: "sticky",
-      heightNum: 3,
+      heightNum: 4,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_5"),
         canvas: document.querySelector("#scroll_section_5 .image_video_canvas"),
         context: document.querySelector("#scroll_section_5 .image_video_canvas").getContext("2d"),
         videoImages: [],
+        gallery: document.querySelector("#scroll_section_5 .touchbar_gallery_container"),
       },
       // 정보
       values: {
@@ -715,6 +716,11 @@
         }
         break;
       case 4:
+        if (scrollRatio < 0.35) {
+          obj.gallery.style.display = "none";
+        } else {
+          obj.gallery.style.display = "block";
+        }
         // canvas scale 조정
         const section5_widthRatio = window.innerWidth / obj.canvas.width;
         const section5_heightRatio = window.innerHeight / obj.canvas.height;

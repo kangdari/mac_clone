@@ -840,10 +840,123 @@ body.open_menu {
   margin-bottom: 20px;
 }
 
+#scroll_section_5 .section_content h1 {
+  color: var(--grey--color);
+}
+
 #scroll_section_5 .image_video_canvas.fixed {
   position: fixed;
   top: 0;
   /* top 속성은 script로 설정 */
+}
+
+#scroll_section_5 .touchbar_gallery_container {
+  padding-top: 80px;
+}
+
+#scroll_section_5 .touchbar_gallery_container .touchbar_gallery {
+  position: relative;
+}
+
+#scroll_section_5 .touchbar_gallery_container .touchbar_gallery .gallery_item_container {
+  position: relative;
+  display: flex;
+  width: 348px;
+  height: 257px;
+}
+
+#scroll_section_5
+  .touchbar_gallery_container
+  .touchbar_gallery
+  .gallery_item_container
+  .gallery_item {
+  min-width: 100%;
+  padding-right: 20px;
+}
+
+#scroll_section_5
+  .touchbar_gallery_container
+  .touchbar_gallery
+  .gallery_item_container
+  .gallery_item:not(.current) {
+  opacity: 0.4;
+}
+
+#scroll_section_5
+  .touchbar_gallery_container
+  .touchbar_gallery
+  .gallery_item_container
+  .gallery_item
+  .image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#scroll_section_5
+  .touchbar_gallery_container
+  .touchbar_gallery
+  .gallery_item_container
+  .gallery_item
+  .keyboard_1 {
+  background-image: url(../image/section_5_gallery/keyboard_s_1.jpg);
+}
+
+#scroll_section_5
+  .touchbar_gallery_container
+  .touchbar_gallery
+  .gallery_item_container
+  .gallery_item
+  .keyboard_2 {
+  background-image: url(../image/section_5_gallery/keyboard_s_2.jpg);
+}
+
+#scroll_section_5
+  .touchbar_gallery_container
+  .touchbar_gallery
+  .gallery_item_container
+  .gallery_item
+  .keyboard_3 {
+  background-image: url(../image/section_5_gallery/keyboard_s_3.jpg);
+}
+
+#scroll_section_5 .touchbar_gallery_container .touchbar_gallery .dot_nav_container {
+  text-align: center;
+  margin-top: 30px;
+}
+#scroll_section_5 .touchbar_gallery_container .touchbar_gallery .dot_nav_container .dot_items {
+  display: inline-flex;
+}
+
+#scroll_section_5 .touchbar_gallery_container .touchbar_gallery .dot_items .dot_item {
+  width: 8px;
+  height: 8px;
+  background: rgba(134, 134, 139, 0.4);
+  border-radius: 50%;
+  margin: 0 8px;
+  cursor: pointer;
+}
+#scroll_section_5 .touchbar_gallery_container .touchbar_gallery .dot_items .dot_item.current {
+  background: #86868b;
+}
+
+#scroll_section_5 .touchbar_gallery_container .touchbar_gallery .caption_container {
+  margin-top: 50px;
+  position: relative;
+}
+
+#scroll_section_5 .touchbar_gallery_container .touchbar_gallery .caption_container p {
+  color: #888888;
+  font-size: 19px;
+  font-weight: 500;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#scroll_section_5 .touchbar_gallery_container .touchbar_gallery .caption_container p:not(.current) {
+  opacity: 0;
+  /* display: none; */
 }
 
 @media (min-width: 730px) {
@@ -947,6 +1060,40 @@ body.open_menu {
   }
   #scroll_section_4 .main_message1 .canvas_text {
     font-size: 40px;
+  }
+
+  /* section_5 */
+
+  #scroll_section_5 .touchbar_gallery_container .touchbar_gallery .gallery_item_container {
+    width: 712px;
+    height: 314px;
+  }
+
+  #scroll_section_5
+    .touchbar_gallery_container
+    .touchbar_gallery
+    .gallery_item_container
+    .gallery_item
+    .keyboard_1 {
+    background-image: url(../image/section_5_gallery/keyboard_m_1.jpg);
+  }
+
+  #scroll_section_5
+    .touchbar_gallery_container
+    .touchbar_gallery
+    .gallery_item_container
+    .gallery_item
+    .keyboard_2 {
+    background-image: url(../image/section_5_gallery/keyboard_m_2.jpg);
+  }
+
+  #scroll_section_5
+    .touchbar_gallery_container
+    .touchbar_gallery
+    .gallery_item_container
+    .gallery_item
+    .keyboard_3 {
+    background-image: url(../image/section_5_gallery/keyboard_m_3.jpg);
   }
 }
 
@@ -1081,6 +1228,21 @@ body.open_menu {
   }
   #scroll_section_4 .main_message1 .canvas_text {
     font-size: 48px;
+  }
+  /* section_5 */
+  #scroll_section_5 .section_content {
+    width: 1100px;
+  }
+
+  #scroll_section_3 .section_content,
+  #scroll_section_4 .section_content,
+  #scroll_section_5 .section_content {
+    margin-bottom: 100px;
+  }
+
+  #scroll_section_5 .touchbar_gallery_container .touchbar_gallery .gallery_item_container {
+    width: 1000px;
+    height: 445px;
   }
 }
 
