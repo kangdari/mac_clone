@@ -136,11 +136,20 @@
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_5"),
-        canvas: document.querySelector("#scroll_section_5 .image_blend_canvas"),
-        context: document.querySelector("#scroll_section_5 .image_blend_canvas").getContext("2d"),
-        video: document.createElement("video"),
+        canvas: document.querySelector("#scroll_section_5 .image_video_canvas"),
+        context: document.querySelector("#scroll_section_5 .image_video_canvas").getContext("2d"),
+        videoImages: [],
       },
-      value: {},
+      // 정보
+      values: {
+        videoImgCounts: 122, // img 개수
+        imgSequence: [0, 121, { start: 0, end: 0 }], // 시작, 끝 인덱스
+        rect_left_X: [0, 0, { start: 0, end: 0 }],
+        rect_right_X: [0, 0, { start: 0, end: 0 }],
+        rectStartY: 0,
+        imageBlendPoint: [0, 0, { start: 0, end: 0 }],
+        canvas_scale: [0, 0, { start: 0, end: 0 }],
+      },
     },
   ];
 
@@ -167,6 +176,14 @@
       imgElem4 = new Image();
       imgElem4.src = sectionInfo[3].obj.imagesPath[i];
       sectionInfo[3].obj.images.push(imgElem4);
+    }
+
+    // section_5
+    let imgElem5;
+    for (let i = 0; i < sectionInfo[4].values.videoImgCounts; i++) {
+      imgElem5 = new Image();
+      imgElem5.src = `../video/section_5/IMG_${6726 + i}.JPG`;
+      sectionInfo[4].obj.videoImages.push(imgElem5);
     }
   };
 
@@ -654,9 +671,122 @@
             currentYoffset
           )}%, 0)`;
         }
+
+        // section_5 canva 미리 그리기
+        if (scrollRatio > 0.7) {
+          const obj = sectionInfo[4].obj;
+          const values = sectionInfo[4].values;
+
+          const section5_widthRatio = window.innerWidth / obj.canvas.width;
+          const section5_heightRatio = window.innerHeight / obj.canvas.height;
+          let section5_canvasRatio;
+          if (section5_widthRatio < section5_heightRatio) {
+            section5_canvasRatio = section5_heightRatio;
+          } else {
+            section5_canvasRatio = section5_widthRatio;
+          }
+
+          const section5_recalculatedInnerWidth = document.body.offsetWidth / section5_canvasRatio;
+
+          obj.canvas.style.transform = `scale(${section5_canvasRatio})`;
+          obj.context.drawImage(obj.videoImages[0], 0, 0);
+
+          const section5_whiteRectWidth = section5_recalculatedInnerWidth * 0.15;
+          values.rect_left_X[0] = (obj.canvas.width - section5_recalculatedInnerWidth) / 2;
+          values.rect_left_X[1] = values.rect_left_X[0] - section5_whiteRectWidth;
+          values.rect_right_X[0] =
+            values.rect_left_X[0] + section5_recalculatedInnerWidth - section5_whiteRectWidth;
+          values.rect_right_X[1] = values.rect_right_X[0] + section5_whiteRectWidth;
+
+          // 흰 박스 애니메이션
+          obj.context.fillStyle = "grey";
+          obj.context.fillRect(
+            values.rect_left_X[0],
+            0,
+            parseInt(section5_whiteRectWidth),
+            obj.canvas.height
+          );
+          obj.context.fillRect(
+            values.rect_right_X[0],
+            0,
+            parseInt(section5_whiteRectWidth),
+            obj.canvas.height
+          );
+        }
         break;
       case 4:
-        obj.context.drawImage(sectionInfo[0].obj.videoImages[0], 0, 0);
+        // canvas scale 조정
+        const section5_widthRatio = window.innerWidth / obj.canvas.width;
+        const section5_heightRatio = window.innerHeight / obj.canvas.height;
+        let section5_canvasRatio;
+        if (section5_widthRatio < section5_heightRatio) {
+          section5_canvasRatio = section5_heightRatio;
+        } else {
+          section5_canvasRatio = section5_widthRatio;
+        }
+
+        const section5_recalculatedInnerWidth = document.body.offsetWidth / section5_canvasRatio;
+
+        obj.canvas.style.transform = `scale(${section5_canvasRatio})`;
+        obj.context.drawImage(obj.videoImages[0], 0, 0);
+
+        // 흰박스 애니메이션 옵션 설정
+        if (!values.rectStartY) {
+          values.rectStartY =
+            obj.canvas.offsetTop +
+            (obj.canvas.height - obj.canvas.height * section5_canvasRatio) / 2;
+
+          values.rect_left_X[2].start = window.innerHeight / 3 / scrollHeight;
+          values.rect_right_X[2].start = window.innerHeight / 3 / scrollHeight;
+          values.rect_left_X[2].end = values.rectStartY / scrollHeight;
+          values.rect_right_X[2].end = values.rectStartY / scrollHeight;
+        }
+
+        // 양쪽 흰 박스 크기 설정
+        const section5_whiteRectWidth = section5_recalculatedInnerWidth * 0.15;
+        values.rect_left_X[0] = (obj.canvas.width - section5_recalculatedInnerWidth) / 2;
+        values.rect_left_X[1] = values.rect_left_X[0] - section5_whiteRectWidth;
+        values.rect_right_X[0] =
+          values.rect_left_X[0] + section5_recalculatedInnerWidth - section5_whiteRectWidth;
+        values.rect_right_X[1] = values.rect_right_X[0] + section5_whiteRectWidth;
+
+        // 흰 박스 애니메이션 그리기
+        obj.context.fillStyle = "grey";
+        obj.context.fillRect(
+          parseInt(calcValue(values.rect_left_X, currentYoffset)),
+          0,
+          parseInt(section5_whiteRectWidth),
+          obj.canvas.height
+        );
+        obj.context.fillRect(
+          parseInt(calcValue(values.rect_right_X, currentYoffset)),
+          0,
+          parseInt(section5_whiteRectWidth),
+          obj.canvas.height
+        );
+
+        // canvas가 상단에 닿기 전
+        if (scrollRatio < values.rect_left_X[2].end) {
+          obj.canvas.classList.remove("fixed");
+        } else {
+          obj.canvas.classList.add("fixed");
+          obj.canvas.style.top = `-${
+            (obj.canvas.height - obj.canvas.height * section5_canvasRatio) / 2
+          }px`;
+
+          values.imgSequence[2].start = values.rect_left_X[2].end;
+          values.imgSequence[2].end = values.imgSequence[2].start + 0.3;
+
+          let sequence = Math.round(calcValue(values.imgSequence, currentYoffset));
+          obj.context.drawImage(obj.videoImages[sequence], 0, 0);
+          obj.canvas.style.marginTop = `0px`;
+        }
+        // canvas img 그리기 애니메이션이 끝난 뒤
+        if (scrollRatio > values.imgSequence[2].end && values.imgSequence[2].end > 0) {
+          obj.canvas.classList.remove("fixed");
+          obj.canvas.style.marginTop = `${scrollHeight * 0.3}px`; //
+        }
+
         break;
     }
   };
