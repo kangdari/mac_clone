@@ -854,6 +854,44 @@ body.open_menu {
   padding-top: 80px;
 }
 
+#scroll_section_5 .touchbar_gallery_container .items_and_nav {
+  position: relative;
+}
+#scroll_section_5 .touchbar_gallery_container .items_and_nav .paddle_nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+#scroll_section_5 .touchbar_gallery_container .items_and_nav .paddle_nav li .nav_btn {
+  width: 50px;
+  height: 50px;
+  font-size: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  background: rgba(210, 210, 215, 0.2);
+  color: rgba(134, 134, 139, 0.8);
+  outline: none;
+  opacity: 0;
+  transition: all 0.25s linear;
+  padding: 0;
+  margin: 0 15px;
+}
+
+#scroll_section_5 .touchbar_gallery_container .items_and_nav .paddle_nav:hover li .nav_btn {
+  opacity: 1;
+}
+
+#scroll_section_5 .touchbar_gallery_container .items_and_nav .paddle_nav li .nav_btn.disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
 #scroll_section_5 .touchbar_gallery_container .touchbar_gallery {
   position: relative;
 }
@@ -863,6 +901,7 @@ body.open_menu {
   display: flex;
   width: 348px;
   height: 257px;
+  transition: transform 0.7s cubic-bezier(0.3, 0, 1, 0.6);
 }
 
 #scroll_section_5
@@ -872,6 +911,7 @@ body.open_menu {
   .gallery_item {
   min-width: 100%;
   padding-right: 20px;
+  transition: opacity 0.7s cubic-bezier(0.3, 0, 1, 0.6);
 }
 
 #scroll_section_5
@@ -1067,6 +1107,7 @@ body.open_menu {
   #scroll_section_5 .touchbar_gallery_container .touchbar_gallery .gallery_item_container {
     width: 712px;
     height: 314px;
+    /* width 만큼 이동 */
   }
 
   #scroll_section_5
@@ -1230,7 +1271,7 @@ body.open_menu {
     font-size: 48px;
   }
   /* section_5 */
-  #scroll_section_5 .section_content {
+  #scroll_section_5 > .section_content:nth-child(1) {
     width: 1100px;
   }
 

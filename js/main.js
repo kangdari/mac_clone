@@ -139,9 +139,15 @@
         canvas: document.querySelector("#scroll_section_5 .image_video_canvas"),
         context: document.querySelector("#scroll_section_5 .image_video_canvas").getContext("2d"),
         videoImages: [],
+        // gallery
         gallery: document.querySelector("#scroll_section_5 .touchbar_gallery_container"),
+        gallery_container: document.querySelector("#scroll_section_5 .gallery_item_container"),
+        gallery_items: [...document.querySelectorAll("#scroll_section_5 .gallery_item")],
+        btn_prev: document.querySelector("#scroll_section_5 .nav_btn_prev"),
+        btn_next: document.querySelector("#scroll_section_5 .nav_btn_next"),
+        captions: [...document.querySelectorAll("#scroll_section_5 .keyboard_caption")],
       },
-      // 정보
+      // wer
       values: {
         videoImgCounts: 122, // img 개수
         imgSequence: [0, 121, { start: 0, end: 0 }], // 시작, 끝 인덱스
@@ -150,6 +156,8 @@
         rectStartY: 0,
         imageBlendPoint: [0, 0, { start: 0, end: 0 }],
         canvas_scale: [0, 0, { start: 0, end: 0 }],
+        // gallery
+        gallery_current_index: 0,
       },
     },
   ];
@@ -894,6 +902,83 @@
         obj.gallery_btn_prev.disabled = true;
       } else {
         obj.gallery_btn_next.disabled = false;
+      }
+    });
+
+    // section_5
+    // 이전 버튼
+    sectionInfo[4].obj.btn_prev.addEventListener("click", () => {
+      const obj = sectionInfo[4].obj;
+      const values = sectionInfo[4].values;
+      const mobile_slideWidth = 348;
+      const tablet_slideWidth = 712;
+      const desktop_slideWidth = 1000;
+
+      if (values.gallery_current_index > 0) {
+        // 현재 활성화 item
+        obj.gallery_items[values.gallery_current_index--].classList.remove("current");
+        obj.gallery_items[values.gallery_current_index].classList.add("current");
+
+        // 디스플레이 크기에 따른 transform 처리
+        if (matchMedia("screen and (min-width: 1068px)").matches) {
+          // desktop
+          obj.gallery_container.style.transform = `translateX(-${
+            desktop_slideWidth * values.gallery_current_index
+          }px)`;
+        } else if (matchMedia("screen and (min-width: 768px)").matches) {
+          // tablet
+          obj.gallery_container.style.transform = `translateX(-${
+            tablet_slideWidth * values.gallery_current_index
+          }px)`;
+        } else {
+          // mobile
+          obj.gallery_container.style.transform = `translateX(-${
+            mobile_slideWidth * values.gallery_current_index
+          }px)`;
+        }
+      }
+
+      // 현재 index에 따른 btn 활성화 설정
+      if (values.gallery_current_index === 0) {
+        obj.btn_prev.classList.add("disabled");
+      } else {
+        obj.btn_next.classList.remove("disabled");
+      }
+    });
+
+    // 다음 버튼
+    sectionInfo[4].obj.btn_next.addEventListener("click", () => {
+      const obj = sectionInfo[4].obj;
+      const values = sectionInfo[4].values;
+      const mobile_slideWidth = 348;
+      const tablet_slideWidth = 712;
+      const desktop_slideWidth = 1000;
+
+      if (values.gallery_current_index < 2) {
+        obj.gallery_items[values.gallery_current_index++].classList.remove("current");
+        obj.gallery_items[values.gallery_current_index].classList.add("current");
+
+        if (matchMedia("screen and (min-width: 1068px)").matches) {
+          // desktop
+          obj.gallery_container.style.transform = `translateX(-${
+            desktop_slideWidth * values.gallery_current_index
+          }px)`;
+        } else if (matchMedia("screen and (min-width: 768px)").matches) {
+          // tablet
+          obj.gallery_container.style.transform = `translateX(-${
+            tablet_slideWidth * values.gallery_current_index
+          }px)`;
+        } else {
+          // mobile
+          obj.gallery_container.style.transform = `translateX(-${
+            mobile_slideWidth * values.gallery_current_index
+          }px)`;
+        }
+      }
+      if (values.gallery_current_index === 2) {
+        obj.btn_next.classList.add("disabled");
+      } else {
+        obj.btn_prev.classList.remove("disabled");
       }
     });
   });
