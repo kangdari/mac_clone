@@ -976,8 +976,9 @@ body.open_menu {
   border-radius: 50%;
   margin: 0 8px;
   cursor: pointer;
+  transition-delay: 0.7s;
 }
-#scroll_section_5 .touchbar_gallery_container .touchbar_gallery .dot_items .dot_item.current {
+#scroll_section_5 .touchbar_gallery_container .touchbar_gallery .dot_items .dot_item.dot_active {
   background: #86868b;
 }
 
