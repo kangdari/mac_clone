@@ -147,8 +147,9 @@
         btn_next: document.querySelector("#scroll_section_5 .nav_btn_next"),
         captions: [...document.querySelectorAll("#scroll_section_5 .keyboard_caption")],
         dot_items: [...document.querySelectorAll("#scroll_section_5 .dot_item")],
-        gallery_current_item: document.querySelector("#scroll_section_5 .gallery_item"),
-        active_dot: document.querySelector("#scroll_section_5 .dot_item"),
+        gallery_current_item: document.querySelector("#scroll_section_5 .gallery_item"), // 현재 item
+        active_dot: document.querySelector("#scroll_section_5 .dot_item"), // 현재 dot
+        current_caption: document.querySelector("#scroll_section_5 .keyboard_caption"), // 현재 caption
       },
       // wer
       values: {
@@ -920,11 +921,14 @@
       if (values.gallery_current_index > 0) {
         obj.gallery_current_item.classList.remove("current");
         obj.active_dot.classList.remove("dot_active");
+        obj.current_caption.classList.remove("current");
         values.gallery_current_index--;
         obj.gallery_current_item = obj.gallery_items[values.gallery_current_index];
         obj.gallery_current_item.classList.add("current");
         obj.active_dot = obj.dot_items[values.gallery_current_index];
         obj.active_dot.classList.add("dot_active");
+        obj.current_caption = obj.captions[values.gallery_current_index];
+        obj.current_caption.classList.add("current");
 
         // 디스플레이 크기에 따른 transform 처리
         if (matchMedia("screen and (min-width: 1068px)").matches) {
@@ -963,11 +967,14 @@
       if (values.gallery_current_index < 2) {
         obj.gallery_current_item.classList.remove("current");
         obj.active_dot.classList.remove("dot_active");
+        obj.current_caption.classList.remove("current");
         values.gallery_current_index++;
         obj.gallery_current_item = obj.gallery_items[values.gallery_current_index];
         obj.gallery_current_item.classList.add("current");
         obj.active_dot = obj.dot_items[values.gallery_current_index];
         obj.active_dot.classList.add("dot_active");
+        obj.current_caption = obj.captions[values.gallery_current_index];
+        obj.current_caption.classList.add("current");
 
         if (matchMedia("screen and (min-width: 1068px)").matches) {
           // desktop
@@ -1008,9 +1015,12 @@
         obj.active_dot = e.target;
         obj.active_dot.classList.add("dot_active");
         obj.gallery_current_item.classList.remove("current"); // 현재 item current 클래스 제거
+        obj.current_caption.classList.remove("current"); // 현재 caption current 클래스 제거
         values.gallery_current_index = Number(obj.active_dot.getAttribute("data-index")); // 클릭한 요소의 인덱스 번호
         obj.gallery_current_item = obj.gallery_items[values.gallery_current_index]; // 현재 item 설정
         obj.gallery_current_item.classList.add("current");
+        obj.current_caption = obj.captions[values.gallery_current_index]; // 현재 caption 재 설정
+        obj.current_caption.classList.add("current");
 
         if (matchMedia("screen and (min-width: 1068px)").matches) {
           // desktop
@@ -1031,8 +1041,10 @@
 
         if (values.gallery_current_index === 0) {
           obj.btn_prev.classList.add("disabled");
+          obj.btn_next.classList.remove("disabled");
         } else if (values.gallery_current_index === 2) {
           obj.btn_next.classList.add("disabled");
+          obj.btn_prev.classList.remove("disabled");
         } else {
           obj.btn_prev.classList.remove("disabled");
           obj.btn_next.classList.remove("disabled");

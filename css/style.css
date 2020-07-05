@@ -994,10 +994,12 @@ body.open_menu {
   position: absolute;
   top: 0;
   left: 0;
-}
-#scroll_section_5 .touchbar_gallery_container .touchbar_gallery .caption_container p:not(.current) {
   opacity: 0;
-  /* display: none; */
+  transition: opacity 0.5s 0.2s;
+}
+#scroll_section_5 .touchbar_gallery_container .touchbar_gallery .caption_container p.current {
+  transition-delay: 0.3s;
+  opacity: 1;
 }
 
 @media (min-width: 730px) {
