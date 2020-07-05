@@ -871,7 +871,7 @@ body.open_menu {
 #scroll_section_5 .touchbar_gallery_container .items_and_nav .paddle_nav li .nav_btn {
   width: 50px;
   height: 50px;
-  font-size: 50px;
+  font-size: 30px;
   line-height: 50px;
   border-radius: 50%;
   background: rgba(210, 210, 215, 0.2);
@@ -881,6 +881,20 @@ body.open_menu {
   transition: all 0.25s linear;
   padding: 0;
   margin: 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#scroll_section_5 .touchbar_gallery_container .items_and_nav .paddle_nav li .nav_btn_next::after {
+  content: "\f054";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+#scroll_section_5 .touchbar_gallery_container .items_and_nav .paddle_nav li .nav_btn_prev::after {
+  content: "\f053";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
 }
 
 #scroll_section_5 .touchbar_gallery_container .items_and_nav .paddle_nav:hover li .nav_btn {
@@ -1107,6 +1121,10 @@ body.open_menu {
 
   /* section_5 */
 
+  #scroll_section_5 .image_video_canvas {
+    margin-bottom: 50px;
+  }
+
   #scroll_section_5 .touchbar_gallery_container .touchbar_gallery .gallery_item_container {
     width: 712px;
     height: 314px;
@@ -1159,7 +1177,7 @@ body.open_menu {
     font-size: 80px;
   }
   .section_intro_text {
-    font-size: 36px;
+    font-size: 34px;
   }
   /* section_1 */
   .video_text {

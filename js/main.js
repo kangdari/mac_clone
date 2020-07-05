@@ -105,7 +105,7 @@
     // section_4
     {
       type: "sticky",
-      heightNum: 4,
+      heightNum: 3.7,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_4"),
@@ -138,6 +138,7 @@
         container: document.querySelector("#scroll_section_5"),
         canvas: document.querySelector("#scroll_section_5 .image_video_canvas"),
         context: document.querySelector("#scroll_section_5 .image_video_canvas").getContext("2d"),
+        main_message1: document.querySelector("#scroll_section_5 .main_message1"),
         videoImages: [],
         // gallery
         gallery: document.querySelector("#scroll_section_5 .touchbar_gallery_container"),
@@ -151,8 +152,8 @@
         active_dot: document.querySelector("#scroll_section_5 .dot_item"), // 현재 dot
         current_caption: document.querySelector("#scroll_section_5 .keyboard_caption"), // 현재 caption
       },
-      // wer
       values: {
+        message1_opacity: [0, 1, { start: 0, end: 0 }],
         videoImgCounts: 122, // img 개수
         imgSequence: [0, 121, { start: 0, end: 0 }], // 시작, 끝 인덱스
         rect_left_X: [0, 0, { start: 0, end: 0 }],
@@ -728,7 +729,7 @@
         }
         break;
       case 4:
-        if (scrollRatio < 0.35) {
+        if (scrollRatio < 0.45) {
           obj.gallery.style.display = "none";
         } else {
           obj.gallery.style.display = "block";
@@ -802,7 +803,14 @@
         // canvas img 그리기 애니메이션이 끝난 뒤
         if (scrollRatio > values.imgSequence[2].end && values.imgSequence[2].end > 0) {
           obj.canvas.classList.remove("fixed");
-          obj.canvas.style.marginTop = `${scrollHeight * 0.3}px`; //
+          obj.canvas.style.marginTop = `${scrollHeight * 0.3}px`;
+          values.message1_opacity[2].start = values.imgSequence[2].end;
+          values.message1_opacity[2].end = values.message1_opacity[2].start + 0.08;
+        }
+        if (scrollRatio > 0.48) {
+          obj.main_message1.style.opacity = calcValue(values.message1_opacity, currentYoffset);
+        } else {
+          obj.main_message1.style.opacity = 0;
         }
 
         break;
