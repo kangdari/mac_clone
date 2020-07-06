@@ -52,6 +52,10 @@ body.before_load {
   opacity: 0;
   transition: 0.5s;
 }
+.before_load #container {
+  display: none;
+}
+
 /* 로딩이 종료되면 before_load 클래스 제거 */
 .before_load .loading {
   opacity: 1;
@@ -298,6 +302,9 @@ body.before_load {
   position: fixed;
   top: 0;
   background-color: rgba(252, 255, 255, 0.1);
+  -webkit-backdrop-filter: saturate(180%) blur(15px);
+  -moz-backdrop-filter: saturate(180%) blur(15px);
+  -o-backdrop-filter: saturate(180%) blur(15px);
   backdrop-filter: saturate(180%) blur(15px);
 }
 .ln {

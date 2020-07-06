@@ -111,7 +111,7 @@
     // section_4
     {
       type: "sticky",
-      heightNum: 3.7,
+      heightNum: 3.9,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_4"),
@@ -139,7 +139,7 @@
     // section_5
     {
       type: "sticky",
-      heightNum: 4,
+      heightNum: 5,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_5"),
@@ -209,7 +209,6 @@
     for (let i = 0; i < sectionInfo.length; i++) {
       sectionInfo[i].scrollHeight = sectionInfo[i].heightNum * window.innerHeight;
       sectionInfo[i].obj.container.style.height = `${sectionInfo[i].scrollHeight}px`;
-      console.log(sectionInfo[i].obj.container.style.height);
     }
     // 현재 스크롤 위치
     yOffset = window.pageYOffset;
@@ -850,10 +849,9 @@
   };
 
   window.addEventListener("load", () => {
-    setLayout();
-
     // 로드가 완료되면 로딩 제거
     document.body.classList.remove("before_load");
+    setLayout();
 
     // transitionend: transition event가 끝났을 때
     document.querySelector(".loading").addEventListener("transitionend", (e) => {
@@ -868,21 +866,39 @@
     });
 
     // 모바일 회전 이벤트 발생 시
-    window.addEventListener("orientationchange", setLayout);
+    window.addEventListener("orientationchange", () => {
+      setTimeout(setLayout, 500);
+    });
 
     window.addEventListener("resize", () => {
       if (window.innerWidth > 900) {
         setLayout();
+        // 브라우저 크기 변화 시
+        // whiteRect를 그리는 start, end 값 재설정을 위해
+        // rectStartY 초기화
+        sectionInfo[2].values.rectStartY = 0;
+        sectionInfo[3].values.rectStartY = 0;
       }
-      // 브라우저 크기 변화 시
-      // whiteRect를 그리는 start, end 값 재설정을 위해
-      // rectStartY 초기화
-      sectionInfo[2].values.rectStartY = 0;
-      sectionInfo[3].values.rectStartY = 0;
     });
 
     // 처음 로드될 때 section_1의 canvas 그려주기
     sectionInfo[0].obj.context.drawImage(sectionInfo[0].obj.videoImages[0], 0, 0);
+
+    // 새로고침 후 캔버스에 아무것도 그려지지 않는 에러 해결
+    // 약간의 스크롤을 발생시키기
+    let tempYOffset = yOffset; // 현재 스크롤위치를 저장할 변수
+    let tempScrollCount = 0;
+    if (tempYOffset > 0) {
+      let siID = setInterval(() => {
+        window.scrollTo(0, tempYOffset); // 스크롤 y축 이동
+        tempYOffset += 3; // 3px씩 이동
+        tempScrollCount++;
+        if (tempScrollCount > 20) {
+          clearInterval(siID); // setInterval 종료
+        }
+      }, 20);
+    }
+
     // 문서 첫 로드시 transition 이벤트
     const obj = sectionInfo[0].obj;
     obj.small_text.style.opacity = "1";
