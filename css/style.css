@@ -33,6 +33,68 @@ body.open_menu {
   overflow-y: hidden;
 }
 
+body.before_load {
+  overflow-y: hidden;
+}
+
+/* loading */
+.loading {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: 0.5s;
+}
+/* 로딩이 종료되면 before_load 클래스 제거 */
+.before_load .loading {
+  opacity: 1;
+}
+
+@keyframes loading_spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading_circle {
+  width: 54px;
+  height: 54px;
+  animation: loading_spin 3s infinite;
+}
+
+@keyframes loading_circle_ani {
+  0% {
+    stroke-dashoffset: 157;
+  }
+  75% {
+    stroke-dashoffset: -147;
+  }
+  100% {
+    stroke-dashoffset: -157;
+  }
+}
+
+.loading_circle circle {
+  /* stroke 테두리 속성 */
+  stroke: black;
+  stroke-width: 4;
+  /* getTotalLength()로 얻을 수 있음 */
+  /* 값만큼 간격을 가짐 */
+  stroke-dasharray: 157;
+  /* 시작 위치 */
+  stroke-dashoffset: 0;
+  /* 색상 */
+  fill: none;
+  animation: loading_circle_ani 1s infinite;
+}
+
 #container {
   position: relative;
   overflow-x: hidden;
@@ -106,7 +168,7 @@ body.open_menu {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 900;
 }
 
 .gn_contents {
@@ -244,7 +306,7 @@ body.open_menu {
   left: 0;
   right: 0;
   width: 100%;
-  z-index: 9990;
+  z-index: 800;
   height: 76px;
 }
 

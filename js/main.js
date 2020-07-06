@@ -851,7 +851,15 @@
 
   window.addEventListener("load", () => {
     setLayout();
-    scrollLoop();
+
+    // 로드가 완료되면 로딩 제거
+    document.body.classList.remove("before_load");
+
+    // transitionend: transition event가 끝났을 때
+    document.querySelector(".loading").addEventListener("transitionend", (e) => {
+      // e.currentTarget = document.querySelector(".loading")
+      document.body.removeChild(e.currentTarget);
+    });
 
     window.addEventListener("scroll", () => {
       yOffset = window.pageYOffset;
