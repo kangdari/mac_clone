@@ -4,6 +4,12 @@
   let currentSection = 0; // 현재 활성화된 섹션
   let prevScrollHeight = 0; // 현재 활성화 섹션 이전 섹션들의 높이 합
   let changeSection = false; // 섹션이 바뀌는 순간 true
+
+  let acc = 0.1; // 가속도
+  let delayedYOffset = 0; // 가속도 처리 된 현재 스크롤 위치
+  let rafId = 0; // requestAnimationFrame id
+  let rafState = false; // requestAnimationFrame 실행 상태 false: 정지, true: 진행 상태
+
   // 각 section(scene)의 기본 정보
   const sectionInfo = [
     // section_1
@@ -125,6 +131,7 @@
         rect_left_X: [0, 0, { start: 0, end: 0 }],
         rect_right_X: [0, 0, { start: 0, end: 0 }],
         rectStartY: 0,
+        eP: 0,
         imageBlendPoint: [0, 0, { start: 0, end: 0 }],
         canvas_scale: [0, 0, { start: 0, end: 0 }],
       },
@@ -222,8 +229,9 @@
     document.body.setAttribute("id", `show_section_${currentSection + 1}`);
 
     // canvas 크기 설정
-    // const heightRatio = window.innerHeight / 1080;
-    sectionInfo[0].obj.canvas.style.transform = `translate3d(-50%, 0, 0)`;
+    const heightRatio = window.innerHeight / 1080;
+    // sectionInfo[0].obj.canvas.style.transform = `translate3d(-50%, 0, 0)`;
+    sectionInfo[0].obj.canvas.style.transform = `translate3d(-50%, 0, 0 ) scale(${heightRatio})`;
   };
 
   const calcValue = (values, currentYoffset) => {
@@ -700,32 +708,8 @@
             section5_canvasRatio = section5_widthRatio;
           }
 
-          const section5_recalculatedInnerWidth = document.body.offsetWidth / section5_canvasRatio;
-
           obj.canvas.style.transform = `scale(${section5_canvasRatio})`;
           obj.context.drawImage(obj.videoImages[0], 0, 0);
-
-          const section5_whiteRectWidth = section5_recalculatedInnerWidth * 0.15;
-          values.rect_left_X[0] = (obj.canvas.width - section5_recalculatedInnerWidth) / 2;
-          values.rect_left_X[1] = values.rect_left_X[0] - section5_whiteRectWidth;
-          values.rect_right_X[0] =
-            values.rect_left_X[0] + section5_recalculatedInnerWidth - section5_whiteRectWidth;
-          values.rect_right_X[1] = values.rect_right_X[0] + section5_whiteRectWidth;
-
-          // 흰 박스 애니메이션
-          obj.context.fillStyle = "grey";
-          obj.context.fillRect(
-            values.rect_left_X[0],
-            0,
-            parseInt(section5_whiteRectWidth),
-            obj.canvas.height
-          );
-          obj.context.fillRect(
-            values.rect_right_X[0],
-            0,
-            parseInt(section5_whiteRectWidth),
-            obj.canvas.height
-          );
         }
         break;
       case 4:
@@ -744,48 +728,20 @@
           section5_canvasRatio = section5_widthRatio;
         }
 
-        const section5_recalculatedInnerWidth = document.body.offsetWidth / section5_canvasRatio;
-
         obj.canvas.style.transform = `scale(${section5_canvasRatio})`;
         obj.context.drawImage(obj.videoImages[0], 0, 0);
 
-        // 흰박스 애니메이션 옵션 설정
-        if (!values.rectStartY) {
-          values.rectStartY =
-            obj.canvas.offsetTop +
-            (obj.canvas.height - obj.canvas.height * section5_canvasRatio) / 2;
-
-          values.rect_left_X[2].start = window.innerHeight / 3 / scrollHeight;
-          values.rect_right_X[2].start = window.innerHeight / 3 / scrollHeight;
-          values.rect_left_X[2].end = values.rectStartY / scrollHeight;
-          values.rect_right_X[2].end = values.rectStartY / scrollHeight;
+        if (!values.imgSequence[2].start) {
+          // 컨버스가 상단에 닿을 때가 시작점
+          values.imgSequence[2].start =
+            (obj.canvas.offsetTop +
+              (obj.canvas.height - obj.canvas.height * section5_canvasRatio) / 2) /
+            scrollHeight;
+          values.imgSequence[2].end = values.imgSequence[2].start + 0.3;
         }
 
-        // 양쪽 흰 박스 크기 설정
-        const section5_whiteRectWidth = section5_recalculatedInnerWidth * 0.15;
-        values.rect_left_X[0] = (obj.canvas.width - section5_recalculatedInnerWidth) / 2;
-        values.rect_left_X[1] = values.rect_left_X[0] - section5_whiteRectWidth;
-        values.rect_right_X[0] =
-          values.rect_left_X[0] + section5_recalculatedInnerWidth - section5_whiteRectWidth;
-        values.rect_right_X[1] = values.rect_right_X[0] + section5_whiteRectWidth;
-
-        // 흰 박스 애니메이션 그리기
-        obj.context.fillStyle = "grey";
-        obj.context.fillRect(
-          parseInt(calcValue(values.rect_left_X, currentYoffset)),
-          0,
-          parseInt(section5_whiteRectWidth),
-          obj.canvas.height
-        );
-        obj.context.fillRect(
-          parseInt(calcValue(values.rect_right_X, currentYoffset)),
-          0,
-          parseInt(section5_whiteRectWidth),
-          obj.canvas.height
-        );
-
         // canvas가 상단에 닿기 전
-        if (scrollRatio < values.rect_left_X[2].end) {
+        if (scrollRatio < values.imgSequence[2].start) {
           obj.canvas.classList.remove("fixed");
         } else {
           obj.canvas.classList.add("fixed");
@@ -793,11 +749,13 @@
             (obj.canvas.height - obj.canvas.height * section5_canvasRatio) / 2
           }px`;
 
-          values.imgSequence[2].start = values.rect_left_X[2].end;
-          values.imgSequence[2].end = values.imgSequence[2].start + 0.3;
+          // 부드러운 감속 비디오 이미지 처리
+          // requestAnimationFrame 이용한 canvas 이미지 그리기
+          if (!rafState) {
+            rafId = requestAnimationFrame(render);
+            rafState = true;
+          }
 
-          let sequence = Math.round(calcValue(values.imgSequence, currentYoffset));
-          obj.context.drawImage(obj.videoImages[sequence], 0, 0);
           obj.canvas.style.marginTop = `0px`;
         }
         // canvas img 그리기 애니메이션이 끝난 뒤
@@ -869,13 +827,50 @@
     }, 200);
   };
 
+  const render = () => {
+    // 스크롤 위치에 가속도 처리
+    delayedYOffset = delayedYOffset + (yOffset - delayedYOffset) * acc;
+    if (!changeSection) {
+      // section_5의 canvas에만 적용
+      if (currentSection === 4) {
+        const currentYoffset = delayedYOffset - prevScrollHeight; // yOffset 대신 delayedYOffset 사용
+        const values = sectionInfo[currentSection].values;
+        const obj = sectionInfo[currentSection].obj;
+
+        let sequence = Math.round(calcValue(values.imgSequence, currentYoffset));
+        // 이미지가 있을 때만
+        if (obj.videoImages[sequence]) {
+          obj.context.drawImage(obj.videoImages[sequence], 0, 0);
+        }
+      }
+    }
+    rafId = requestAnimationFrame(render);
+    // 최종 목적 스크롤 위치와 가속도 처리된 스크롤 위치의 차이가 1px이하
+    if (Math.abs(yOffset - delayedYOffset) <= 1) {
+      cancelAnimationFrame(rafId); // 중지
+      rafState = false; // requestAnimationFrame 정지
+    }
+  };
   window.addEventListener("scroll", () => {
     yOffset = window.pageYOffset;
-    checkMenu();
     scrollLoop();
+    checkMenu();
   });
 
-  window.addEventListener("resize", setLayout);
+  // 모바일 회전 이벤트 발생 시
+  window.addEventListener("orientationchange", setLayout);
+
+  window.addEventListener("resize", () => {
+    console.log("resize");
+    setLayout();
+
+    // 브라우저 크기 변화 시
+    // whiteRect를 그리는 start, end 값 재설정을 위해
+    // rectStartY 초기화
+    sectionInfo[2].values.rectStartY = 0;
+    sectionInfo[3].values.rectStartY = 0;
+    sectionInfo[4].values.rectStartY = 0;
+  });
   window.addEventListener("load", () => {
     setLayout();
     scrollLoop();
