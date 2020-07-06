@@ -175,7 +175,7 @@
     let imgElem;
     for (let i = 0; i < sectionInfo[0].values.videoImgCounts; i++) {
       imgElem = new Image();
-      imgElem.src = `../video/macbook/${i}.jpg`;
+      imgElem.src = `/video/macbook/${i}.jpg`;
       sectionInfo[0].obj.videoImages.push(imgElem);
     }
 
@@ -199,7 +199,7 @@
     let imgElem5;
     for (let i = 0; i < sectionInfo[4].values.videoImgCounts; i++) {
       imgElem5 = new Image();
-      imgElem5.src = `../video/section_5/IMG_${6726 + i}.JPG`;
+      imgElem5.src = `/video/section_5/IMG_${6726 + i}.JPG`;
       sectionInfo[4].obj.videoImages.push(imgElem5);
     }
   };

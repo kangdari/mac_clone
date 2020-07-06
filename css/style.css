@@ -1018,7 +1018,7 @@ body.before_load {
   .gallery_item_container
   .gallery_item
   .keyboard_1 {
-  background-image: url(../image/section_5_gallery/keyboard_s_1.jpg);
+  background-image: url(/image/section_5_gallery/keyboard_s_1.jpg);
 }
 
 #scroll_section_5
@@ -1027,7 +1027,7 @@ body.before_load {
   .gallery_item_container
   .gallery_item
   .keyboard_2 {
-  background-image: url(../image/section_5_gallery/keyboard_s_2.jpg);
+  background-image: url(/image/section_5_gallery/keyboard_s_2.jpg);
 }
 
 #scroll_section_5
@@ -1036,7 +1036,7 @@ body.before_load {
   .gallery_item_container
   .gallery_item
   .keyboard_3 {
-  background-image: url(../image/section_5_gallery/keyboard_s_3.jpg);
+  background-image: url(/image/section_5_gallery/keyboard_s_3.jpg);
 }
 
 #scroll_section_5 .touchbar_gallery_container .touchbar_gallery .dot_nav_container {
@@ -1201,7 +1201,7 @@ body.before_load {
     .gallery_item_container
     .gallery_item
     .keyboard_1 {
-    background-image: url(../image/section_5_gallery/keyboard_m_1.jpg);
+    background-image: url(/image/section_5_gallery/keyboard_m_1.jpg);
   }
 
   #scroll_section_5
@@ -1210,7 +1210,7 @@ body.before_load {
     .gallery_item_container
     .gallery_item
     .keyboard_2 {
-    background-image: url(../image/section_5_gallery/keyboard_m_2.jpg);
+    background-image: url(/image/section_5_gallery/keyboard_m_2.jpg);
   }
 
   #scroll_section_5
@@ -1219,7 +1219,7 @@ body.before_load {
     .gallery_item_container
     .gallery_item
     .keyboard_3 {
-    background-image: url(../image/section_5_gallery/keyboard_m_3.jpg);
+    background-image: url(/image/section_5_gallery/keyboard_m_3.jpg);
   }
 }
 
