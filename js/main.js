@@ -163,10 +163,6 @@
         message1_opacity: [0, 1, { start: 0, end: 0 }],
         videoImgCounts: 122, // img 개수
         imgSequence: [0, 121, { start: 0, end: 0 }], // 시작, 끝 인덱스
-        rect_left_X: [0, 0, { start: 0, end: 0 }],
-        rect_right_X: [0, 0, { start: 0, end: 0 }],
-        rectStartY: 0,
-        imageBlendPoint: [0, 0, { start: 0, end: 0 }],
         canvas_scale: [0, 0, { start: 0, end: 0 }],
         // gallery
         gallery_current_index: 0,
@@ -213,6 +209,7 @@
     for (let i = 0; i < sectionInfo.length; i++) {
       sectionInfo[i].scrollHeight = sectionInfo[i].heightNum * window.innerHeight;
       sectionInfo[i].obj.container.style.height = `${sectionInfo[i].scrollHeight}px`;
+      console.log(sectionInfo[i].obj.container.style.height);
     }
     // 현재 스크롤 위치
     yOffset = window.pageYOffset;
@@ -851,29 +848,31 @@
       rafState = false; // requestAnimationFrame 정지
     }
   };
-  window.addEventListener("scroll", () => {
-    yOffset = window.pageYOffset;
-    scrollLoop();
-    checkMenu();
-  });
 
-  // 모바일 회전 이벤트 발생 시
-  window.addEventListener("orientationchange", setLayout);
-
-  window.addEventListener("resize", () => {
-    console.log("resize");
-    setLayout();
-
-    // 브라우저 크기 변화 시
-    // whiteRect를 그리는 start, end 값 재설정을 위해
-    // rectStartY 초기화
-    sectionInfo[2].values.rectStartY = 0;
-    sectionInfo[3].values.rectStartY = 0;
-    sectionInfo[4].values.rectStartY = 0;
-  });
   window.addEventListener("load", () => {
     setLayout();
     scrollLoop();
+
+    window.addEventListener("scroll", () => {
+      yOffset = window.pageYOffset;
+      scrollLoop();
+      checkMenu();
+    });
+
+    // 모바일 회전 이벤트 발생 시
+    window.addEventListener("orientationchange", setLayout);
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 900) {
+        setLayout();
+      }
+      // 브라우저 크기 변화 시
+      // whiteRect를 그리는 start, end 값 재설정을 위해
+      // rectStartY 초기화
+      sectionInfo[2].values.rectStartY = 0;
+      sectionInfo[3].values.rectStartY = 0;
+    });
+
     // 처음 로드될 때 section_1의 canvas 그려주기
     sectionInfo[0].obj.context.drawImage(sectionInfo[0].obj.videoImages[0], 0, 0);
     // 문서 첫 로드시 transition 이벤트
