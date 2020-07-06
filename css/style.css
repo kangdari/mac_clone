@@ -490,6 +490,7 @@ body.before_load {
 .sticky_element {
   display: none;
   position: fixed;
+  top: 0;
   left: 0;
   right: 0;
   width: 100%;
@@ -508,12 +509,6 @@ body.before_load {
 }
 #show_section_2 #container {
   overflow: hidden;
-}
-.sticky_element_canvas {
-  position: relative;
-  width: 100%;
-  height: auto;
-  z-index: -1;
 }
 
 .main_message {
@@ -1252,9 +1247,7 @@ body.before_load {
   .video_text {
     font-size: 22px;
   }
-  .sticky_element_canvas canvas {
-    width: auto;
-  }
+
   /* section_2 */
   .features_text {
     font-size: 24px;

@@ -347,7 +347,6 @@
           // canvas 크기 조절 및 img 그리기
           obj.canvas.style.transform = `scale(${canvasRatio})`;
           obj.context.drawImage(obj.images[0], 0, 0);
-          // obj.context.drawImage(obj.images[0], 0, 0);
 
           // 컨버스 크기에 맞춰 가정한 innerWidth, innerHeight
           // document.body.offsetWidth: 스크롤 너비를 제외한 화면 넓이
@@ -747,10 +746,6 @@
 
           // 부드러운 감속 비디오 이미지 처리
           // requestAnimationFrame 이용한 canvas 이미지 그리기
-          if (!rafState) {
-            rafId = requestAnimationFrame(render);
-            rafState = true;
-          }
 
           obj.canvas.style.marginTop = `0px`;
         }
@@ -840,6 +835,18 @@
         }
       }
     }
+
+    if (delayedYOffset < 1) {
+      scrollLoop();
+      sectionInfo[0].obj.canvas.opacity = 1;
+      sectionInfo[0].obj.context.drawImage(sectionInfo[0].obj.videoImages[0], 0, 0);
+    }
+    // end 키로 페이지 맨 아래로 갈 경우: 마지막 섹션은 스크롤 계산으로 위치 및 크기를 결정해야할 요소들이 많아서 1픽셀을 움직여주는 것으로 해결
+    if (document.body.offsetHeight - window.innerHeight - delayedYOffset < 1) {
+      let tempYOffset = yOffset;
+      scrollTo(0, tempYOffset - 1);
+    }
+
     rafId = requestAnimationFrame(render);
     // 최종 목적 스크롤 위치와 가속도 처리된 스크롤 위치의 차이가 1px이하
     if (Math.abs(yOffset - delayedYOffset) <= 1) {
@@ -863,6 +870,12 @@
       yOffset = window.pageYOffset;
       scrollLoop();
       checkMenu();
+
+      // 부드러운 감속 비디오 이미지 처리
+      if (!rafState) {
+        rafId = requestAnimationFrame(render);
+        rafState = true;
+      }
     });
 
     // 모바일 회전 이벤트 발생 시
