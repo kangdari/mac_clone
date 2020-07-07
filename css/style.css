@@ -655,7 +655,8 @@ body.before_load {
   width: 100%;
   height: 188px;
   margin: 0 auto;
-  background-image: url("/image/section_2_mac.jpg");
+  background-image: url(image/section_2_mac.jpg);
+  /* background-image: url(/image/section_2_mac.jpg); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -775,23 +776,28 @@ body.before_load {
 }
 
 #scroll_section_3 .gallery_screen_container .image_0 {
-  background-image: url(/image/section3_gallery/small_1.png);
+  background-image: url(image/section3_gallery/small_1.png);
+  /* background-image: url(/image/section3_gallery/small_1.png); */
   left: calc(var(--img--gap--mobile) * 0);
 }
 #scroll_section_3 .gallery_screen_container .image_1 {
-  background-image: url(/image/section3_gallery/small_2.png);
+  background-image: url(image/section3_gallery/small_2.png);
+  /* background-image: url(/image/section3_gallery/small_2.png); */
   left: calc(var(--img--gap--mobile) * 1);
 }
 #scroll_section_3 .gallery_screen_container .image_2 {
-  background-image: url(/image/section3_gallery/small_3.png);
+  background-image: url(image/section3_gallery/small_3.png);
+  /* background-image: url(/image/section3_gallery/small_3.png); */
   left: calc(var(--img--gap--mobile) * 2);
 }
 #scroll_section_3 .gallery_screen_container .image_3 {
-  background-image: url(/image/section3_gallery/small_4.png);
+  background-image: url(image/section3_gallery/small_4.png);
+  /* background-image: url(/image/section3_gallery/small_4.png); */
   left: calc(var(--img--gap--mobile) * 3);
 }
 #scroll_section_3 .gallery_screen_container .image_4 {
-  background-image: url(/image/section3_gallery/small_5.png);
+  background-image: url(image/section3_gallery/small_5.png);
+  /* background-image: url(/image/section3_gallery/small_5.png); */
   left: calc(var(--img--gap--mobile) * 4);
 }
 #scroll_section_3 .gallery_screen_container .content_container {
@@ -1018,7 +1024,8 @@ body.before_load {
   .gallery_item_container
   .gallery_item
   .keyboard_1 {
-  background-image: url(/image/section_5_gallery/keyboard_s_1.jpg);
+  background-image: url(image/section_5_gallery/keyboard_s_1.jpg);
+  /* background-image: url(/image/section_5_gallery/keyboard_s_1.jpg); */
 }
 
 #scroll_section_5
@@ -1027,7 +1034,8 @@ body.before_load {
   .gallery_item_container
   .gallery_item
   .keyboard_2 {
-  background-image: url(/image/section_5_gallery/keyboard_s_2.jpg);
+  background-image: url(image/section_5_gallery/keyboard_s_2.jpg);
+  /* background-image: url(/image/section_5_gallery/keyboard_s_2.jpg); */
 }
 
 #scroll_section_5
@@ -1036,7 +1044,8 @@ body.before_load {
   .gallery_item_container
   .gallery_item
   .keyboard_3 {
-  background-image: url(/image/section_5_gallery/keyboard_s_3.jpg);
+  background-image: url(image/section_5_gallery/keyboard_s_3.jpg);
+  /* background-image: url(/image/section_5_gallery/keyboard_s_3.jpg); */
 }
 
 #scroll_section_5 .touchbar_gallery_container .touchbar_gallery .dot_nav_container {
@@ -1111,7 +1120,7 @@ body.before_load {
     width: 100%;
     height: 448px;
     background-size: cover;
-    background-image: url(/image/section_2_mac_L.jpg);
+    background-image: url(image/section_2_mac_L.jpg);
   }
 
   #scroll_section_2 .contents_container .contents {
@@ -1201,7 +1210,8 @@ body.before_load {
     .gallery_item_container
     .gallery_item
     .keyboard_1 {
-    background-image: url(/image/section_5_gallery/keyboard_m_1.jpg);
+    background-image: url(image/section_5_gallery/keyboard_m_1.jpg);
+    /* background-image: url(/image/section_5_gallery/keyboard_m_1.jpg); */
   }
 
   #scroll_section_5
@@ -1210,7 +1220,8 @@ body.before_load {
     .gallery_item_container
     .gallery_item
     .keyboard_2 {
-    background-image: url(/image/section_5_gallery/keyboard_m_2.jpg);
+    background-image: url(image/section_5_gallery/keyboard_m_2.jpg);
+    /* background-image: url(/image/section_5_gallery/keyboard_m_2.jpg); */
   }
 
   #scroll_section_5
@@ -1219,7 +1230,8 @@ body.before_load {
     .gallery_item_container
     .gallery_item
     .keyboard_3 {
-    background-image: url(/image/section_5_gallery/keyboard_m_3.jpg);
+    background-image: url(image/section_5_gallery/keyboard_m_3.jpg);
+    /* background-image: url(/image/section_5_gallery/keyboard_m_3.jpg); */
   }
 }
 
@@ -1270,7 +1282,7 @@ body.before_load {
     transform: translateX(-50%);
     width: 1440px;
     height: 660px;
-    background-image: url(/image/section_2_mac_L.jpg);
+    background-image: url(image/section_2_mac_L.jpg);
   }
   /* section_3 */
   #scroll_section_3 .main_message2 {
@@ -1313,19 +1325,23 @@ body.before_load {
   }
 
   #scroll_section_3 .gallery_screen_container .image_1 {
-    background-image: url(/image/section3_gallery/medium_2.png);
+    background-image: url(image/section3_gallery/medium_2.png);
+    /* background-image: url(/image/section3_gallery/medium_2.png); */
     left: calc(var(--img--gap--desktop));
   }
   #scroll_section_3 .gallery_screen_container .image_2 {
-    background-image: url(/image/section3_gallery/medium_3.png);
+    background-image: url(image/section3_gallery/medium_3.png);
+    /* background-image: url(//section3_gallery/medium_3.png); */
     left: calc(var(--img--gap--desktop) * 2);
   }
   #scroll_section_3 .gallery_screen_container .image_3 {
-    background-image: url(/image/section3_gallery/medium_4.png);
+    background-image: url(image/section3_gallery/medium_4.png);
+    /* background-image: url(/image/section3_gallery/medium_4.png); */
     left: calc(var(--img--gap--desktop) * 3);
   }
   #scroll_section_3 .gallery_screen_container .image_4 {
-    background-image: url(/image/section3_gallery/medium_5.png);
+    background-image: url(image/section3_gallery/medium_5.png);
+    /* background-image: url(/image/section3_gallery/medium_5.png); */
     left: calc(var(--img--gap--desktop) * 4);
   }
 
