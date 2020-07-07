@@ -77,7 +77,7 @@
         message3: document.querySelector("#scroll_section_3 .main_message3"),
         canvas: document.querySelector("#scroll_section_3 .image_blend_canvas"),
         context: document.querySelector("#scroll_section_3 .image_blend_canvas").getContext("2d"),
-        imagesPath: ["../image/section_3_img_1.jpg", "../image/section_3_img_2.jpg"],
+        imagesPath: ["image/section_3_img_1.jpg", "image/section_3_img_2.jpg"],
         images: [],
         // gallery
         gallery: document.querySelector("#scroll_section_3 .gallery"),
@@ -119,7 +119,7 @@
         message2: document.querySelector("#scroll_section_4 .main_message2"),
         canvas: document.querySelector("#scroll_section_4 .image_blend_canvas"),
         context: document.querySelector("#scroll_section_4 .image_blend_canvas").getContext("2d"),
-        imagesPath: ["../image/section_4_img_1.jpg", "../image/section_4_img_2.jpg"],
+        imagesPath: ["image/section_4_img_1.jpg", "image/section_4_img_2.jpg"],
         images: [],
       },
       values: {
@@ -131,7 +131,6 @@
         rect_left_X: [0, 0, { start: 0, end: 0 }],
         rect_right_X: [0, 0, { start: 0, end: 0 }],
         rectStartY: 0,
-        eP: 0,
         imageBlendPoint: [0, 0, { start: 0, end: 0 }],
         canvas_scale: [0, 0, { start: 0, end: 0 }],
       },
@@ -139,7 +138,7 @@
     // section_5
     {
       type: "sticky",
-      heightNum: 5,
+      heightNum: 8,
       scrollHeight: 0,
       obj: {
         container: document.querySelector("#scroll_section_5"),
@@ -161,8 +160,8 @@
       },
       values: {
         message1_opacity: [0, 1, { start: 0, end: 0 }],
-        videoImgCounts: 122, // img 개수
-        imgSequence: [0, 121, { start: 0, end: 0 }], // 시작, 끝 인덱스
+        videoImgCounts: 590, // img 개수
+        imgSequence: [0, 589, { start: 0, end: 0 }], // 시작, 끝 인덱스
         canvas_scale: [0, 0, { start: 0, end: 0 }],
         // gallery
         gallery_current_index: 0,
@@ -175,7 +174,7 @@
     let imgElem;
     for (let i = 0; i < sectionInfo[0].values.videoImgCounts; i++) {
       imgElem = new Image();
-      imgElem.src = `/video/macbook/${i}.jpg`;
+      imgElem.src = `video/macbook/${i}.jpg`;
       sectionInfo[0].obj.videoImages.push(imgElem);
     }
 
@@ -199,7 +198,7 @@
     let imgElem5;
     for (let i = 0; i < sectionInfo[4].values.videoImgCounts; i++) {
       imgElem5 = new Image();
-      imgElem5.src = `/video/section_5/IMG_${6726 + i}.JPG`;
+      imgElem5.src = `video/section5/mac_${1 + i}.jpg`;
       sectionInfo[4].obj.videoImages.push(imgElem5);
     }
   };
@@ -708,11 +707,6 @@
         }
         break;
       case 4:
-        if (scrollRatio < 0.45) {
-          obj.gallery.style.display = "none";
-        } else {
-          obj.gallery.style.display = "block";
-        }
         // canvas scale 조정
         const section5_widthRatio = window.innerWidth / obj.canvas.width;
         const section5_heightRatio = window.innerHeight / obj.canvas.height;
@@ -732,7 +726,7 @@
             (obj.canvas.offsetTop +
               (obj.canvas.height - obj.canvas.height * section5_canvasRatio) / 2) /
             scrollHeight;
-          values.imgSequence[2].end = values.imgSequence[2].start + 0.3;
+          values.imgSequence[2].end = values.imgSequence[2].start + 0.6;
         }
 
         // canvas가 상단에 닿기 전
@@ -752,14 +746,21 @@
         // canvas img 그리기 애니메이션이 끝난 뒤
         if (scrollRatio > values.imgSequence[2].end && values.imgSequence[2].end > 0) {
           obj.canvas.classList.remove("fixed");
-          obj.canvas.style.marginTop = `${scrollHeight * 0.3}px`;
+          obj.canvas.style.marginTop = `${scrollHeight * 0.6}px`;
           values.message1_opacity[2].start = values.imgSequence[2].end;
-          values.message1_opacity[2].end = values.message1_opacity[2].start + 0.08;
+          values.message1_opacity[2].end = values.message1_opacity[2].start + 0.1;
         }
-        if (scrollRatio > 0.48) {
+        // message1
+        if (scrollRatio > values.imgSequence[2].end) {
           obj.main_message1.style.opacity = calcValue(values.message1_opacity, currentYoffset);
         } else {
           obj.main_message1.style.opacity = 0;
+        }
+        // keyboard_gallery
+        if (scrollRatio < 0.45) {
+          obj.gallery.style.display = "none";
+        } else {
+          obj.gallery.style.display = "block";
         }
 
         break;
